@@ -1,0 +1,13 @@
+com\mycompany\learnmate\entities\Usuario.class
+com\mycompany\learnmate\services\UsuarioFacade.class
+com\mycompany\learnmate\services\RolFacadeLocal.class
+com\mycompany\learnmate\services\UsuarioFacadeLocal.class
+com\mycompany\learnmate\security\Filtro.class
+com\mycompany\learnmate\services\PersonaFacade.class
+com\mycompany\learnmate\services\PersonaFacadeLocal.class
+com\mycompany\learnmate\controller\Login.class
+com\mycompany\learnmate\services\AbstractFacade.class
+com\mycompany\learnmate\entities\Rol.class
+com\mycompany\learnmate\services\RolFacade.class
+com\mycompany\learnmate\entities\Persona.class
+com\mycompany\learnmate\controller\ControllerUsuario.class
