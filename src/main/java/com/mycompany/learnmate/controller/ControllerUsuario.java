@@ -4,8 +4,8 @@
  */
 package com.mycompany.learnmate.controller;
 
-import com.mycompany.learnmate.entities.Usuario;
-import com.mycompany.learnmate.services.UsuarioFacadeLocal;
+import com.mycompany.learnmate.entities.Usuarios;
+import com.mycompany.learnmate.services.UsuariosFacadeLocal;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
@@ -20,19 +20,19 @@ import java.util.ArrayList;
 @Named(value = "controllerUsuario")
 @ViewScoped
 public class ControllerUsuario implements Serializable {
-Usuario con = new Usuario();
+Usuarios con = new Usuarios();
 @EJB
-UsuarioFacadeLocal cfl;
+UsuariosFacadeLocal cfl;
 
-    public Usuario getCon() {
+    public Usuarios getCon() {
         return con;
     }
 
-    public void setCon(Usuario con) {
+    public void setCon(Usuarios con) {
         this.con = con;
     }
 
-public List<Usuario> listarUsuarios() {
+public List<Usuarios> listarUsuarios() {
        try {
             return cfl.findAll();
         } catch (Exception e) {
