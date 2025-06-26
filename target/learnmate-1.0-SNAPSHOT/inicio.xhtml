@@ -7,27 +7,26 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Contenido del sitio
-        <h2>Usuario conectado: #{login.usuario}</h2><f:view>
-        </f:view>
-        
+        <h1>Contenido del sitio</h1>
+        <h2>Usuario conectado: #{login.usuario}</h2>
+
         <f:view>
-
-
             <h:form>
+                <h:commandButton value="Cerrar sesión" action="#{login.cerrarSesion}" />
+
                 <h1><h:outputText value="List"/></h1>
                 <h:dataTable value="#{controllerPersona.listarPersonas()}" var="item">
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
                         </f:facet>
-                        <h:outputText value="#{item.id}"/>
+                        <h:outputText value="#{item.personaId}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Nombre"/>
                         </f:facet>
-                        <h:outputText value="#{item.nombre}"/>
+                        <h:outputText value="#{item.primerNombre}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
@@ -39,13 +38,11 @@
                         <f:facet name="header">
                             <h:outputText value="NumeroDocumento"/>
                         </f:facet>
-                        <h:outputText value="#{item.numeroDocumento}"/>
+                        <h:outputText value="#{item.identificacion}"/>
                     </h:column>
                 </h:dataTable>
             </h:form>
         </f:view>
-
-
 
     </h:body>
 </html>
