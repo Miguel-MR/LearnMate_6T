@@ -4,21 +4,32 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Login</title>
-        <link href="resources/css/login.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/estilo_login.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body>
-        Inicio de Sesión
-        <h:form>
-            <h:panelGrid columns="3">
-                <h:outputLabel value="Usuario:" for="iTextUsuario" />
-                <h:inputText id="iTextUsuario" value="#{login.usuario}" required="true" requiredMessage="El campo usuario es obligatorio" />
-                <h:message for="iTextUsuario" style="color: red" />
-                <h:outputLabel value="Contraseña" for="iTextPassword" />
-                <h:inputSecret id="iTextPassword" value="#{login.contrasenna}" required="true" requiredMessage="El campo Contraseña es obligatorio" />
-                <h:message for="iTextPassword" style="color: red" />
-            </h:panelGrid>
-            <h:messages globalOnly="true"/>
-            <h:commandButton value="Iniciar Sesión" action="#{login.iniciarSesion()}"/>
-        </h:form>
+        <div class="container">
+            
+            <!-- Imagen de la izquierda -->
+            <div class="image-container">
+                <img src="/resources/images/Logo.jpg" alt="Ruta de imagen"/>
+            </div>
+            <!-- Card Login -->
+            <div class="card">
+                <img src="/resources/images/Logo.jpg" alt="Imagen de logo"/>
+                <h2>Bienvenido</h2>
+                <p>Ingresa tu cuenta</p>
+                <h:form>
+                    <h:inputText value="#{login.usuario}" required="true" requiredMessage="El campo usuario es obligatorio"/>
+                    <h:inputSecret value="#{login.contrasenna}" required="true" requiredMessage="El campo Contraseña es obligatorio" />
+                    <h:commandButton value="Ingresar" action="#{login.iniciarSesion()}" />
+                    <h:messages globalOnly="true"/>
+
+                    <div class="extra-link">
+                        <h:outputLink value="#">¿Olvidaste tu contraseña?</h:outputLink>
+                    </div>
+                </h:form>
+            </div>
+
+        </div>
     </h:body>
 </html>
