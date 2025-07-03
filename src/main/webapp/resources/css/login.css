@@ -1,83 +1,192 @@
-/* Fondo general de la página */
-body {
-    align-items: center;
-    background-image: url('../images/login-bg.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100vh;
-    justify-content: center;
+/* Importa la fuente desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
+
+:root {
+    --shadow-color: 174deg 38% 39%;
+    --primary-color: #67c3b9;
+    --primary-hover: #498f87;
+    --shadow-elevation-high:
+        0.6px 0.8px 1.2px hsl(var(--shadow-color) / 0.15),
+        3.2px 4.2px 6.6px -0.2px hsl(var(--shadow-color) / 0.16),
+        5.5px 7.3px 11.4px -0.4px hsl(var(--shadow-color) / 0.18),
+        8px 10.7px 16.6px -0.6px hsl(var(--shadow-color) / 0.19),
+        11.2px 14.9px 23.2px -0.8px hsl(var(--shadow-color) / 0.2),
+        15.4px 20.5px 31.9px -0.9px hsl(var(--shadow-color) / 0.22),
+        21.1px 28px 43.6px -1.1px hsl(var(--shadow-color) / 0.23),
+        28.7px 38.1px 59.4px -1.3px hsl(var(--shadow-color) / 0.25),
+        38.5px 51.1px 79.7px -1.5px hsl(var(--shadow-color) / 0.26),
+        51px 67.8px 105.6px -1.7px hsl(var(--shadow-color) / 0.27);
+}
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-/* Título principal */
-h1 {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    color: #ffffff;
-    font-size: 2rem;
-    margin-bottom: 40px;
-    padding: 20px 40px;
+body,
+html {
+    height: 100%;
+    font-family: 'Nunito Sans', sans-serif;
+    /* Cambié la fuente a Nunito Sans */
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* Cambié esto de 'center' a 'flex-start' para mover la tarjeta a la izquierda */
+    padding-right: 70px;
+    /* Agregué un margen a la izquierda para que no quede pegado al borde */
+}
+
+.card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-elevation-high);
+    width: 100%;
+    max-width: 400px;
     text-align: center;
+    animation: fadeIn 1s ease;
 }
 
-/* Tabla de datos del usuario */
-table {
-    background-color: white;
-    border-collapse: separate;
-    border-radius: 12px;
-    border-spacing: 10px 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    padding: 20px;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-td {
-    font-size: 1.1rem;
-    padding: 8px 12px;
+.card img {
+    width: 80px;
+    margin-bottom: 20px;
 }
 
-/* Columna izquierda (etiquetas) */
-td:first-child {
-    color: #555;
-    font-weight: bold;
+.card h2 {
+    margin-bottom: 10px;
+    color: #333;
 }
 
-/* Columna derecha (valores) */
-td:last-child {
-    color: #222;
+.card p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
 }
 
-/* Estilo del botón de login */
-.boton-login {
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.card input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.card button {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
     color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1rem;
-    padding: 12px 24px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-/* Centrar el botón */
-.contenedor-boton {
     margin-top: 20px;
-    text-align: center;
+    transition: background 0.3s;
 }
 
-/* Efecto al pasar el mouse */
-.boton-login:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
+.card button:hover {
+    background: var(--primary-hover);
 }
 
-/* Efecto al hacer clic */
-.boton-login:active {
-    transform: scale(0.98);
+.card .extra-link {
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.card .extra-link a {
+    color: var(--primary-hover);
+    text-decoration: none;
+}
+
+.card .extra-link a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* Alinea los elementos al inicio */
+    gap: 20px;
+    /* Espacio entre la imagen y la tarjeta */
+    margin-left: 2cm;
+    /* Separación del borde izquierdo */
+    flex-wrap: wrap;
+    /* Permite que los elementos se ajusten en pantallas pequeñas */
+}
+
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container img {
+    max-width: 500px;
+    /* Ajusta el tamaño máximo de la imagen */
+    height: auto;
+    border-radius: 10px;
+    /* Bordes redondeados opcionales */
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        /* Cambia la dirección a columna */
+        align-items: center;
+        /* Centra los elementos */
+        margin-left: 0;
+        /* Elimina el margen izquierdo */
+        gap: 30px;
+        /* Ajusta el espacio entre elementos */
+    }
+
+    .image-container img {
+        max-width: 300px;
+        /* Reduce el tamaño máximo de la imagen */
+    }
+
+    .card {
+        width: 90%;
+        /* Ocupa el 90% del ancho de la pantalla */
+        max-width: none;
+        /* Elimina el límite de ancho */
+    }
+}
+
+/* Media queries para pantallas muy pequeñas (móviles) */
+@media (max-width: 480px) {
+    .card {
+        padding: 20px;
+        /* Reduce el padding */
+    }
+
+    .card input,
+    .card button {
+        font-size: 14px;
+        /* Ajusta el tamaño de fuente */
+        padding: 10px;
+        /* Reduce el padding */
+    }
+
+    .image-container img {
+        max-width: 200px;
+        /* Reduce aún más el tamaño de la imagen */
+    }
 }
