@@ -85,4 +85,9 @@ public class Login implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login?faces-redirect=true"; // Cambia "login" si tu página tiene otro nombre
     }
+    public void invalidarSesion() {
+        
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        
+    }
 }
