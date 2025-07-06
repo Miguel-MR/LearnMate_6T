@@ -1,6 +1,8 @@
 package com.mycompany.learnmate.controller;
 
+import com.mycompany.learnmate.entities.Permisos;
 import com.mycompany.learnmate.entities.Usuarios;
+import com.mycompany.learnmate.services.PermisosFacadeLocal;
 import com.mycompany.learnmate.services.UsuariosFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -11,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Named(value = "login")
 @SessionScoped
@@ -19,12 +22,23 @@ public class Login implements Serializable {
     private String usuario;
     private String contrasenna;
     private Usuarios user;
+    private List<Permisos> listaPermisos;
 
     @EJB
     private UsuariosFacadeLocal ufl;
+    @EJB
+    private PermisosFacadeLocal pfl;
 
     public Login() {
         user = new Usuarios();
+    }
+
+    public List<Permisos> getListaPermisos() {
+        return listaPermisos;
+    }
+
+    public void setListaPermisos(List<Permisos> listaPermisos) {
+        this.listaPermisos = listaPermisos;
     }
 
     public String getUsuario() {
@@ -55,6 +69,7 @@ public class Login implements Serializable {
             System.out.println("Inicio de sesión exitoso. Usuario encontrado: " + user.getNombreusuario());
             FacesContext contexto = FacesContext.getCurrentInstance();
             HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
+            this.listaPermisos = pfl.permisosByUser(user);
             sesion.setAttribute("usuario", user);
             return "views/TemplateSitio?faces-redirect=true";
         } else {

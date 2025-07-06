@@ -5,6 +5,8 @@
 package com.mycompany.learnmate.services;
 
 import com.mycompany.learnmate.entities.Permisos;
+import com.mycompany.learnmate.entities.Usuarios;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,21 @@ public class PermisosFacade extends AbstractFacade<Permisos> implements Permisos
 
     public PermisosFacade() {
         super(Permisos.class);
+    }
+
+    @Override
+    public List<Permisos> permisosByUser(Usuarios usuario) {
+        try {
+            return em.createQuery("SELECT p from Usuarios u"
+                    + " JOIN u.rolesUsuarioCollection ruc "
+                    + "JOIN ruc.rolId ri"
+                    + " JOIN ri.rolPermisosCollection rpc "
+                    + "JOIN rpc.permisosId p "
+                    + "where u.nombreusuario=:usuario", Permisos.class).setParameter("usuario", usuario.getNombreusuario()).getResultList();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
     }
     
 }

@@ -5,6 +5,7 @@
 package com.mycompany.learnmate.services;
 
 import com.mycompany.learnmate.entities.Permisos;
+import com.mycompany.learnmate.entities.Usuarios;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +29,7 @@ public interface PermisosFacadeLocal {
     List<Permisos> findRange(int[] range);
 
     int count();
+    
+    List<Permisos>permisosByUser (Usuarios usuario);
     
 }
