@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                <table id="t-all" class="jsf-data-table display nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Primer Nombre</th>
+                            <th>Tipo Documento</th>
+                            <th>Documento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{controllerPersona.listarPersonas()}" var="item">
+                            <tr>
+                                <td>#{item.primerNombre}</td>
+                                <td>#{item.tipoDocumento}</td>
+                                <td>#{item.identificacion}</td>
+                                <td>
+                                    <h:form style="display:inline">
+                                        <h:commandLink value="✏️ Editar" action="#{controllerPersona.prepararEdicion(item)}" />
+                                    </h:form>
+                                    <h:form style="display:inline; margin-left: 1em;">
+                                        <h:commandLink value="🗑️ Eliminar" action="#{controllerPersona.eliminarPersona(item)}"
+                                                       onclick="return confirm('¿Seguro que deseas eliminar esta persona?');" />
+                                    </h:form>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+
+                <script>
+                    $(document).ready(function () {
+                        $('.jsf-data-table').DataTable({
+                            dom: 'Bfrtip',
+                            "language": {
+                                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                            },
+                            "pageLength": 50,
+                            buttons: [
+                                'copy', 'csv', 'excel', 'pdf', 'print'
+                            ]
+                        });
+
+                    });
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

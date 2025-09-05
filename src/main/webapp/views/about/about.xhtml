@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/views/Inicio/templateInicio.xhtml">
+
+    <!-- Bloque del título de la página -->
+    <ui:define name="titulo">
+        LearnMate - Inicio
+    </ui:define>
+
+    <!-- Bloque de estilos adicionales -->
+    <ui:define name="estilos">
+            <link rel="stylesheet" type="text/css"
+      href="#{request.contextPath}/resources/css/estiloMain.css"/>
+
+        </ui:define>
+
+    <!-- Bloque de contenido principal -->
+    <ui:define name="contenido">
+        <div class="inicio-container">
+            <h1>Bienvenido a LearnMate</h1>
+            
+            <section class="mision">
+                <h2>Misión</h2>
+                <p>Proveer soluciones educativas innovadoras que faciliten el aprendizaje y desarrollo de habilidades en estudiantes, utilizando tecnología de punta y metodologías interactivas.</p>
+            </section>
+            
+            <section class="vision">
+                <h2>Visión</h2>
+                <p>Ser reconocidos como la plataforma educativa líder en Latinoamérica, ofreciendo experiencias de aprendizaje accesibles, inclusivas y efectivas para todos los estudiantes.</p>
+            </section>
+            
+            <section class="objetivos-generales">
+                <h2>Objetivos Generales</h2>
+                <ul>
+                    <li>Fomentar el aprendizaje continuo y autónomo en los estudiantes.</li>
+                    <li>Integrar tecnologías educativas para mejorar la experiencia de enseñanza.</li>
+                    <li>Contribuir al desarrollo académico y personal de la comunidad estudiantil.</li>
+                </ul>
+            </section>
+            
+            <section class="objetivos-especificos">
+                <h2>Objetivos Específicos</h2>
+                <ul>
+                    <li>Desarrollar recursos interactivos y contenidos digitales de alta calidad.</li>
+                    <li>Implementar herramientas de seguimiento y evaluación del aprendizaje.</li>
+                    <li>Brindar soporte técnico y educativo continuo a los usuarios.</li>
+                    <li>Promover la colaboración y comunicación entre estudiantes y docentes.</li>
+                </ul>
+            </section>
+        </div>
+    </ui:define>
+
+</ui:composition>
+</html>

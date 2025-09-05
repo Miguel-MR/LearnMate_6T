@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+
+    <!-- Pool Local -->
+    <jdbc-connection-pool name="mysql_learnmate_rootPool"
+                          datasource-classname="com.mysql.cj.jdbc.MysqlDataSource"
+                          res-type="javax.sql.DataSource"
+                          steady-pool-size="8"
+                          max-pool-size="32"
+                          max-wait-time-in-millis="60000"
+                          idle-timeout-in-seconds="300"
+                          connection-validation-method="auto-commit">
+        <property name="serverName" value="localhost"/>
+        <property name="portNumber" value="3306"/>
+        <property name="databaseName" value="learnmate"/>
+        <property name="User" value="root"/>
+        <property name="Password" value=""/>
+        <property name="URL" value="jdbc:mysql://localhost:3306/learnmate?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false"/>
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+    </jdbc-connection-pool>
+
+    <jdbc-resource enabled="true"
+                   jndi-name="java:app/learnmate"
+                   object-type="user"
+                   pool-name="mysql_learnmate_rootPool"/>
+
+    <!-- Pool Remoto -->
+    <jdbc-connection-pool name="mysql_LearnMate_DanielPool"
+                          datasource-classname="com.mysql.cj.jdbc.MysqlDataSource"
+                          res-type="javax.sql.DataSource"
+                          steady-pool-size="8"
+                          max-pool-size="32"
+                          max-wait-time-in-millis="60000"
+                          idle-timeout-in-seconds="300"
+                          connection-validation-method="auto-commit">
+        <property name="serverName" value="learnmate-learnmate.l.aivencloud.com"/>
+        <property name="portNumber" value="25568"/>
+        <property name="databaseName" value="LearnMate"/>
+        <property name="User" value="Daniel"/>
+        <property name="Password" value="AVNS_dEbbjwg2ZuYXwO9hAvy"/>
+        <property name="URL" value="jdbc:mysql://learnmate-learnmate.l.aivencloud.com:25568/LearnMate?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false"/>
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+    </jdbc-connection-pool>
+
+    <jdbc-resource enabled="true"
+                   jndi-name="java:app/LearnMate Web"
+                   object-type="user"
+                   pool-name="mysql_LearnMate_DanielPool"/>
+
+</resources>

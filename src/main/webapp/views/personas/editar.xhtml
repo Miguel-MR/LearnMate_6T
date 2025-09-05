@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="./../TemplateSitio.xhtml">
+    <ui:define name="content">
+
+        <h:form>
+            <h2>Editar Persona</h2>
+
+            <!-- Prueba de carga (puedes eliminarlo luego) -->
+            <h:outputText value="🧪 Persona cargada: #{controllerPersona.con.primerNombre}" 
+                          style="color:green; font-weight:bold;" />
+
+            <h:panelGrid columns="2" columnClasses="label,value" style="margin-bottom:2em">
+
+                <h:outputLabel for="primerNombre" value="Primer Nombre:" />
+                <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}" required="true" />
+
+                <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
+                <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}" />
+
+                <h:outputLabel for="primerApellido" value="Primer Apellido:" />
+                <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}" required="true" />
+
+                <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
+                <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}" />
+
+                <h:outputLabel for="tipoDocumento" value="Tipo Documento:" />
+                <h:selectOneMenu id="tipoDocumento" value="#{controllerPersona.con.tipoDocumento}" required="true">
+                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                    <f:selectItem itemLabel="RC" itemValue="RC" />
+                    <f:selectItem itemLabel="TT" itemValue="TT" />
+                    <f:selectItem itemLabel="CC" itemValue="CC" />
+                    <f:selectItem itemLabel="CE" itemValue="CE" />
+                    <f:selectItem itemLabel="PPT" itemValue="PPT" />
+                </h:selectOneMenu>
+
+                <h:outputLabel for="identificacion" value="Número de Documento:" />
+                <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}" required="true" />
+
+                <h:outputLabel for="genero" value="Género:" />
+                <h:selectOneMenu id="genero" value="#{controllerPersona.con.genero}" required="true">
+                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                    <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                    <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                    <f:selectItem itemLabel="Otro" itemValue="Otro" />
+                </h:selectOneMenu>
+
+                <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
+                <h:inputText id="fechaNacimiento" value="#{controllerPersona.con.fechaNacimiento}">
+                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                    <f:passThroughAttribute name="type" value="date" />
+                </h:inputText>
+
+                <h:outputLabel for="direccion" value="Dirección:" />
+                <h:inputText id="direccion" value="#{controllerPersona.con.direccion}" />
+
+                <h:outputLabel for="telefono" value="Teléfono:" />
+                <h:inputText id="telefono" value="#{controllerPersona.con.telefono}" />
+
+                <h:outputLabel for="correo" value="Correo Electrónico:" />
+                <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}" />
+            </h:panelGrid>
+
+            <h:commandButton value="Guardar cambios" action="#{controllerPersona.actualizarPersona()}" />
+            <h:link outcome="/views/personas/index.xhtml" value="Cancelar" style="margin-left:1em" />
+            <h:messages globalOnly="true" layout="table" />
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>

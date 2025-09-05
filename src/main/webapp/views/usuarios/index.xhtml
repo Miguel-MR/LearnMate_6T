@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Registro de Persona" /></h1>
+
+                        <!-- Datos personales -->
+                        <h:panelGrid columns="2" columnClasses="label,value" style="margin-bottom: 2em">
+
+                            <h:outputLabel for="primerNombre" value="Primer Nombre:" />
+                            <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}" required="true" />
+
+                            <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
+                            <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}" />
+
+                            <h:outputLabel for="primerApellido" value="Primer Apellido:" />
+                            <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}" required="true" />
+
+                            <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
+                            <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}" />
+
+                            <h:outputLabel for="tipoDocumento" value="Tipo de Documento:" />
+                            <h:selectOneMenu id="tipoDocumento" value="#{controllerPersona.con.tipoDocumento}" required="true">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Registro Civil" itemValue="RC" />
+                                <f:selectItem itemLabel="Tarjeta de Identidad" itemValue="TI" />
+                                <f:selectItem itemLabel="Cédula de Ciudadanía" itemValue="CC" />
+                                <f:selectItem itemLabel="Cédula de Extranjería" itemValue="CE" />
+                                <f:selectItem itemLabel="Permiso por Protección Temporal" itemValue="PPT" />
+                            </h:selectOneMenu>
+
+
+                            <h:outputLabel for="identificacion" value="Número de Documento:" />
+                            <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}" required="true" />
+
+                            <h:outputLabel for="genero" value="Género:" />
+                            <h:selectOneMenu id="genero" value="#{controllerPersona.con.genero}" required="true">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </h:selectOneMenu>
+
+                            <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
+                            <h:inputText id="fechaNacimiento" value="#{controllerPersona.con.fechaNacimiento}">
+                                <f:convertDateTime pattern="yyyy-MM-dd" />
+                                <f:passThroughAttribute name="type" value="date" />
+                            </h:inputText>
+
+                            <h:outputLabel for="direccion" value="Dirección:" />
+                            <h:inputText id="direccion" value="#{controllerPersona.con.direccion}" />
+
+                            <h:outputLabel for="telefono" value="Teléfono:" />
+                            <h:inputText id="telefono" value="#{controllerPersona.con.telefono}" />
+
+                            <h:outputLabel for="correo" value="Correo Electrónico:" />
+                            <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}" />
+                        </h:panelGrid>
+
+                        <!-- Datos de usuario -->
+                        <h:panelGrid columns="2" columnClasses="label,value" style="margin-bottom: 2em">
+
+                            <h:outputLabel for="nombreusuario" value="Nombre de Usuario:" />
+                            <h:inputText id="nombreusuario" value="#{controllerPersona.nuevoUsuario.nombreusuario}" required="true" />
+                            <h:outputLabel />
+                            <h:message for="nombreusuario" style="color:red" />
+
+                            <h:outputLabel for="contrasenna" value="Contraseña:" />
+                            <h:inputSecret id="contrasenna" value="#{controllerPersona.nuevoUsuario.contrasenna}" required="true" />
+                            <h:outputLabel />
+                            <h:message for="contrasenna" style="color:red" />
+
+                            <h:outputLabel for="confirmarContrasenna" value="Confirmar Contraseña:" />
+                            <h:inputSecret id="confirmarContrasenna" value="#{controllerPersona.confirmarContrasenna}" required="true" />
+                            <h:outputLabel />
+                            <h:message for="confirmarContrasenna" style="color:red" />
+
+                            <h:outputLabel for="rolId" value="Rol del Usuario:" />
+                            <h:selectOneMenu id="rolId" value="#{controllerPersona.rolSeleccionado}" converter="rolesConverter" required="true">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{controllerPersona.listaRoles}" var="rol"
+                                               itemLabel="#{rol.nombreRol}" itemValue="#{rol}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel />
+                            <h:message for="rolId" style="color:red" />
+
+                            <h:outputLabel for="estadoId" value="Estado del Usuario:" />
+                            <h:selectOneMenu id="estadoId" value="#{controllerPersona.nuevoUsuario.estadoId}" converter="estadoUsuarioConverter" required="true">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{controllerPersona.listaEstados}" var="estado"
+                                               itemLabel="#{estado.nombreEstado}" itemValue="#{estado}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel />
+                            <h:message for="estadoId" style="color:red" />
+                        </h:panelGrid>
+
+                        <!-- Acción -->
+                        <h:commandButton value="Registrar" action="#{controllerPersona.crearPersona()}" style="margin-top:1em;" />
+                        <h:messages globalOnly="true" layout="table" />
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

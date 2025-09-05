@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Gestión de Personas</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <!-- DataTables Buttons CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"/>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+    <!-- JSZip y pdfmake (para exportar a Excel y PDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+</h:head>
+
+<h:body>
+    <ui:composition template="/views/TemplateSitio.xhtml">
+
+        <ui:define name="content">
+            <table id="t-all" class="display nowrap" width="100%">
+                <thead>
+                    <tr>
+                        <th>Primer Nombre</th>
+                        <th>Tipo Documento</th>
+                        <th>Documento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ui:repeat value="#{controllerPersona.listarPersonas()}" var="item">
+                        <tr>
+                            <td>#{item.primerNombre}</td>
+                            <td>#{item.tipoDocumento}</td>
+                            <td>#{item.identificacion}</td>
+                            <td>
+                                <h:form style="display:inline">
+                                    <h:commandLink value="✏️ Editar" action="#{controllerPersona.prepararEdicion(item)}" />
+                                </h:form>
+                                <h:form style="display:inline; margin-left: 1em;">
+                                    <h:commandLink value="🗑️ Eliminar" action="#{controllerPersona.eliminarPersona(item)}"
+                                                   onclick="return confirm('¿Seguro que deseas eliminar esta persona?');" />
+                                </h:form>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+
+            <script>
+                $(document).ready(function () {
+                    $('#t-all').DataTable({
+                        dom: 'Bfrtip', // B: botones, f: filtro, r: procesamiento, t: tabla, i: info, p: paginación
+                        language: {
+                            url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+                        },
+                        pageLength: 50,
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    });
+                });
+            </script>
+        </ui:define>
+
+    </ui:composition>
+</h:body>
+</html>

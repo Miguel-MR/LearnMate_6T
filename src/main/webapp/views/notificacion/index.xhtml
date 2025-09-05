@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="./../TemplateSitio.xhtml">
+  <ui:define name="content">
+    <f:view>
+
+      <h:form id="formNotificacion">
+        <h1 style="margin-top:0;">
+          <h:outputText value="#{controllerNotificacion.notif.notificacionId != null 
+                                 ? '✏️ Editar Notificación' 
+                                 : '➕ Crear Nueva Notificación'}" />
+        </h1>
+
+        <h:panelGrid columns="2" columnClasses="label,value" style="margin-bottom: 1.5em;">
+
+          <h:outputLabel for="nombreNotificacion" value="Notificación:" />
+          <h:inputText id="nombreNotificacion"
+                       value="#{controllerNotificacion.notif.nombreNotificacion}"
+                       required="true"
+                       requiredMessage="El campo Notificación es obligatorio." />
+
+          <h:outputLabel for="fechaNotificacion" value="Fecha Notificación:" />
+          <h:inputText id="fechaNotificacion"
+                       value="#{controllerNotificacion.notif.fechaNotificacion}"
+                       required="true"
+                       requiredMessage="La Fecha de Notificación es obligatoria.">
+            <f:convertDateTime pattern="MM/dd/yyyy" />
+          </h:inputText>
+
+          <h:outputLabel for="categoriaNotificacion" value="Categoría:" />
+          <h:inputText id="categoriaNotificacion"
+                       value="#{controllerNotificacion.notif.categoriaNotificacion}"
+                       required="true"
+                       requiredMessage="El campo Categoría es obligatorio." />
+
+          <h:outputLabel for="fechaCreacion" value="Fecha de Creación:" />
+          <h:inputText id="fechaCreacion"
+                       value="#{controllerNotificacion.notif.fechaCreacion}">
+            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+          </h:inputText>
+
+          <h:outputLabel for="asunto" value="Asunto:" />
+          <h:inputText id="asunto"
+                       value="#{controllerNotificacion.notif.asunto}"
+                       required="true"
+                       requiredMessage="El campo Asunto es obligatorio." />
+
+          <h:outputLabel for="descripcion" value="Descripción:" />
+          <h:inputTextarea id="descripcion"
+                           rows="4" cols="30"
+                           value="#{controllerNotificacion.notif.descripcion}" />
+        </h:panelGrid>
+
+        <h:commandButton value="💾 Guardar" action="#{controllerNotificacion.guardar()}" />
+        <h:link value="Cancelar" outcome="/notificacion/notificaciones.xhtml"
+                style="margin-left:1em;" />
+
+        <h:messages globalOnly="true" layout="table" style="margin-top: 1em;" />
+      </h:form>
+
+    </f:view>
+  </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/views/Inicio/templateInicio.xhtml">
+
+        <!-- Título de la página -->
+        <ui:define name="titulo">
+            LearnMate
+        </ui:define>
+
+        <!-- Estilos adicionales -->
+        <ui:define name="estilos">
+            <link rel="stylesheet" type="text/css"
+                  href="#{request.contextPath}/resources/css/estiloMain.css"/>
+        </ui:define>
+
+        <!-- Contenido principal -->
+        <ui:define name="contenido">
+
+            <!-- Sección principal de bienvenida -->
+            <div class="hero-section">
+                <h1>Bienvenido a LearnMate</h1>
+                <p>La plataforma educativa que conecta estudiantes y profesores de manera eficiente y moderna.</p>
+                <h:outputLink value="#{request.contextPath}/login.xhtml" styleClass="btn btn-primary">
+                    Comenzar
+                </h:outputLink>
+            </div>
+
+            <!-- Sección de características -->
+            <div class="features-section">
+                <div class="feature-card">
+                    <h2>Aprendizaje Personalizado</h2>
+                    <p>Accede a contenidos adaptados a tu ritmo y nivel de aprendizaje.</p>
+                </div>
+                <div class="feature-card">
+                    <h2>Seguimiento de Progreso</h2>
+                    <p>Monitorea tu avance y recibe reportes detallados de tus logros.</p>
+                </div>
+                <div class="feature-card">
+                    <h2>Comunidad Activa</h2>
+                    <p>Interactúa con otros estudiantes y profesores mediante foros y chats.</p>
+                </div>
+            </div>
+
+            <!-- Llamado a la acción -->
+            <div class="call-to-action">
+                <h2>¿Listo para empezar?</h2>
+                <h:outputLink value="#{request.contextPath}/login.xhtml" styleClass="btn btn-success">
+                    Ingresa a tu cuenta
+                </h:outputLink>
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

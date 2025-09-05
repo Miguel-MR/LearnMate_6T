@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title><ui:insert name="titulo">LearnMate</ui:insert></title>
+
+    <!-- Estilos globales -->
+    <h:outputStylesheet library="css" name="default.css"/>
+
+    <!-- Aquí se insertan estilos adicionales de las vistas -->
+    <ui:insert name="estilos"/>
+</h:head>
+
+<h:body class="login-body">
+    <!-- Barra de navegación -->
+    <div class="navbar navbar-custom">
+        <div class="logo-container">
+            <img src="#{request.contextPath}/resources/images/logo.png" alt="logo"/>
+            <span class="brand">LearnMate</span>
+        </div>
+
+        <!-- Menú al lado del logo -->
+        <ul class="nav">
+            <li><a href="#{request.contextPath}/index.xhtml">Inicio</a></li>
+            <li><a href="#{request.contextPath}/views/login/login.xhtml">Login</a></li>
+            <li><a href="#{request.contextPath}/views/about/about.xhtml">Quiénes Somos</a></li>
+            <li><a href="#">Soporte</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenido dinámico -->
+    <div class="main-content">
+        <ui:insert name="contenido">Contenido por defecto</ui:insert>
+    </div>
+
+ <!-- Pie de página -->
+<footer class="footer">
+    <div class="footer-container">
+        <span>&copy; 2025 LearnMate</span>
+        <span class="footer-item"><a href="#">Mapa del sitio</a></span>
+        <span class="footer-item"><a href="mailto:soporte@learnmate.com">soporte@learnmate.com</a></span>
+        <span class="footer-item"><a href="tel:+1234567890">+1 234 567 890</a></span>
+    </div>
+</footer>
+
+</h:body>
+</html>

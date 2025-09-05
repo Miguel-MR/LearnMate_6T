@@ -1,0 +1,196 @@
+/* === Layout general === */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 13px;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+#top {
+    position: relative;
+    background: linear-gradient(90deg, #0b3c91, #145edb);
+    color: white;
+    padding: 10px 20px;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#bottom {
+    position: relative;
+    background: linear-gradient(90deg, #145edb, #0b3c91);
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.15);
+}
+
+#left {
+    float: left;
+    background: linear-gradient(to bottom, #f7f1c7, #ece3a5, #d6cb86);
+    padding: 5px;
+    width: 150px;
+    height: calc(100vh - 120px);
+    box-sizing: border-box;
+    overflow-y: auto;
+    color: #333;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content,
+.left_content,
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    margin-left: 170px;
+    background-color: #f4f9ff;
+    border-left: 3px solid #145edb;
+}
+
+.right_content {
+    margin: 0 170px;
+}
+
+/* === Enlaces === */
+#top a,
+#bottom a,
+#left a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#top a:link,
+#top a:visited {
+    color: white;
+}
+
+#top a:hover,
+#top a:visited:hover {
+    color: #e0e0e0;
+    text-decoration: underline;
+}
+
+#left h3 {
+    color: #0b3c91;
+    margin-top: 1em;
+}
+
+#left a {
+    color: #0b3c91;
+}
+
+#left a:hover {
+    color: #145edb;
+    text-decoration: underline;
+}
+
+#bottom a {
+    color: #a5d0ff;
+}
+
+#bottom a:hover {
+    color: #ffffff;
+}
+
+/* === Botones === */
+h\:commandButton,
+input[type="submit"],
+button {
+    background: linear-gradient(90deg, #0b3c91, #145edb);
+    color: white !important;
+    font-weight: bold;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+h\:commandButton:hover,
+input[type="submit"]:hover,
+button:hover {
+    background: linear-gradient(90deg, #093179, #114cb3);
+}
+
+/* === Títulos === */
+h1, h2, h3, h4 {
+    color: #0b3c91;
+}
+
+/* === DataTables ajustes === */
+#t-all_wrapper,
+#tabla-noti_wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.dt-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#botones-dt,
+#botones-noti-dt {
+    margin-bottom: 0.5em !important;
+    padding: 0 !important;
+}
+
+.dataTables_filter,
+.dataTables_length {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+table.dataTable,
+#tabla-noti {
+    width: 100% !important;
+    table-layout: auto !important;
+    margin-top: 0 !important;
+    border-collapse: collapse;
+    background-color: white;
+    border: 1px solid #ccc;
+    color: #222;
+}
+
+.dt-button {
+    background-color: #0b3c91 !important;
+    border: none !important;
+    color: white !important;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 3px;
+}
+
+.dt-button:hover {
+    background-color: #145edb !important;
+    color: white !important;
+}
+
+/* === Contenedores del formulario y tabla === */
+#formGeneral,
+#tablaPersonas,
+#tablaPersonasWrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: block !important;
+}

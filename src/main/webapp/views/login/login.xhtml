@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- Usamos el template -->
+    <ui:composition template="/views/Inicio/templateInicio.xhtml">
+
+        <!-- Bloque del título de la página -->
+        <ui:define name="titulo">
+            Login
+        </ui:define>
+
+        <!-- Bloque de estilos adicionales -->
+        <ui:define name="estilos">
+            <link rel="stylesheet" type="text/css"
+      href="#{request.contextPath}/resources/css/estiloMain.css"/>
+
+        </ui:define>
+
+        <!-- Bloque de contenido principal -->
+        <ui:define name="contenido">
+            <div class="container">
+
+                <!-- Imagen de la izquierda -->
+                <div class="image-container">
+                    <img src="#{request.contextPath}/resources/images/Niña2.png"
+                         alt="user-picture"
+                         class="img-responsive img-circle center-box"/>
+                </div>
+
+                <!-- Card Login -->
+                <div class="card">
+                    <h2>Bienvenido</h2>
+                    <p>Ingresa tu cuenta</p>
+                    <h:form>
+                        <h:inputText value="#{login.usuario}"
+                                     required="true"
+                                     requiredMessage="El campo usuario es obligatorio"/>
+                        <h:inputSecret value="#{login.contrasenna}"
+                                       required="true"
+                                       requiredMessage="El campo Contraseña es obligatorio"/>
+                        <h:commandButton value="Ingresar"
+                                         action="#{login.iniciarSesion()}"/>
+                        <h:messages globalOnly="true"/>
+
+                        <div class="extra-link">
+                            <h:outputLink value="#">¿Olvidaste tu contraseña?</h:outputLink>
+                        </div>
+                    </h:form>
+                </div>
+
+            </div>
+        </ui:define>
+
+    </ui:composition>
+</html>
