@@ -120,16 +120,6 @@ public class ControllerPersona implements Serializable {
 
     public void eliminarPersona(Personas persona) {
         try {
-            List<Usuarios> usuariosAsociados = usuariosFacade.findByPersonaId(persona);
-
-            for (Usuarios u : usuariosAsociados) {
-                List<RolesUsuario> roles = rolesUsuarioFacade.findByUsuarioId(u);
-                for (RolesUsuario r : roles) {
-                    rolesUsuarioFacade.remove(r);
-                }
-                usuariosFacade.remove(u);
-            }
-
             cfl.remove(persona);
 
             FacesContext.getCurrentInstance().addMessage(null,

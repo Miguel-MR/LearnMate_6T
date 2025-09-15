@@ -49,11 +49,13 @@
                                                            action="#{controllerPersona.eliminarPersona(item)}"
                                                            onclick="return confirm('¿Seguro que deseas eliminar esta persona?');" />
                                         </td>
+                                        
                                     </tr>
                                 </ui:repeat>
 
                             </tbody>
                         </table>
+                        <h:messages globalOnly="true" layout="table" />
 
 
 
