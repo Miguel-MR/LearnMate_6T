@@ -43,6 +43,10 @@ public class ControllerPersona implements Serializable {
     private String confirmarContrasenna;
 
     private Integer personaId;
+    
+    private String filtroNombre;
+    private String filtroTipoDocumento;
+    private List<Personas> personasFiltradas;
 
     @PostConstruct
     public void init() {
@@ -157,14 +161,40 @@ public class ControllerPersona implements Serializable {
     }
 
     public List<Personas> listarPersonas() {
-        try {
-            return cfl.findAll();
-        } catch (Exception e) {
-            System.out.println("Error al listar personas: " + e.getMessage());
-            return new ArrayList<>();
+        if (personasFiltradas != null){
+            return personasFiltradas;
         }
+        return cfl.findAll();
+        //try {
+        //    return cfl.findAll();
+        //} catch (Exception e) {
+        //    System.out.println("Error al listar personas: " + e.getMessage());
+        //    return new ArrayList<>();
+        
     }
 
+    //agregado
+    
+    public void aplicarFiltros() {
+    try {
+        personasFiltradas = new ArrayList<>();
+        for (Personas p : cfl.findAll()) {
+            boolean coincideNombre = filtroNombre == null || filtroNombre.isEmpty()
+                    || p.getPrimerNombre().toLowerCase().contains(filtroNombre.toLowerCase());
+            boolean coincideTipo = filtroTipoDocumento == null || filtroTipoDocumento.isEmpty()
+                    || p.getTipoDocumento().equalsIgnoreCase(filtroTipoDocumento);
+
+            if (coincideNombre && coincideTipo) {
+                personasFiltradas.add(p);
+            }
+        }
+    } catch (Exception e) {
+        System.out.println("Error al aplicar filtros: " + e.getMessage());
+    }
+}
+// fin agregado 
+    
+    
     public String prepararEdicion(Personas persona) {
         this.con = persona;
         return "/views/personas/editar.xhtml";
@@ -219,4 +249,21 @@ public class ControllerPersona implements Serializable {
     public void setPersonaId(Integer personaId) {
         this.personaId = personaId;
     }
+    //get y set de agregafo
+    public String getFiltroNombre() {
+    return filtroNombre;
+    }
+
+    public void setFiltroNombre(String filtroNombre) {
+    this.filtroNombre = filtroNombre;
+    }
+
+    public String getFiltroTipoDocumento() {
+    return filtroTipoDocumento;
+    }
+
+    public void setFiltroTipoDocumento(String filtroTipoDocumento) {
+    this.filtroTipoDocumento = filtroTipoDocumento;
+    }
+
 }
