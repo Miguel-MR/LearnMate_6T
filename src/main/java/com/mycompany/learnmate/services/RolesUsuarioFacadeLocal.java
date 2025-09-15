@@ -30,6 +30,6 @@ public interface RolesUsuarioFacadeLocal {
 
     int count();
 
-    public List<RolesUsuario> findByUsuarioId(Usuarios u);
+    public List<RolesUsuario> findByUsuario(Usuarios u);
     
 }

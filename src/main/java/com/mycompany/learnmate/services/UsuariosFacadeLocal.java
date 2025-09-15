@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package com.mycompany.learnmate.services;
 
 import com.mycompany.learnmate.entities.Personas;
@@ -16,11 +12,11 @@ import javax.ejb.Local;
 @Local
 public interface UsuariosFacadeLocal {
 
-    void create(Usuarios usuarios);
+    void create(Usuarios usuario); // Renombré 'nombreusuario' a 'usuario' para mayor claridad
 
-    void edit(Usuarios usuarios);
+    void edit(Usuarios usuario);
 
-    void remove(Usuarios usuarios);
+    void remove(Usuarios usuario);
 
     Usuarios find(Object id);
 
@@ -30,8 +26,11 @@ public interface UsuariosFacadeLocal {
 
     int count();
 
-    public Usuarios iniciarSesion(String usuario, String contrasenna);
+    public Usuarios iniciarSesion(String nombreusuario, String contrasenna);
     
     public List<Usuarios> findByPersonaId(Personas persona);
+    
+    // 🔑 MÉTODO AÑADIDO: Fuerza la persistencia inmediata en una nueva transacción.
+    public Usuarios createAndFlush(Usuarios usuario);
     
 }

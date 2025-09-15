@@ -1,32 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.learnmate.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
- * @author castr
+ * Entidad Usuarios con relación hacia Personas y RolesUsuario
  */
 @Entity
 @Table(name = "usuarios")
@@ -35,47 +17,61 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByUsuarioId", query = "SELECT u FROM Usuarios u WHERE u.usuarioId = :usuarioId"),
     @NamedQuery(name = "Usuarios.findByNombreusuario", query = "SELECT u FROM Usuarios u WHERE u.nombreusuario = :nombreusuario"),
-    @NamedQuery(name = "Usuarios.findByContrasenna", query = "SELECT u FROM Usuarios u WHERE u.contrasenna = :contrasenna")})
+    @NamedQuery(name = "Usuarios.findByContrasenna", query = "SELECT u FROM Usuarios u WHERE u.contrasenna = :contrasenna")
+})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "usuario_id")
     private Integer usuarioId;
-    @Basic(optional = false)
+
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "nombreusuario")
     private String nombreusuario;
-    @Basic(optional = false)
+
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "contrasenna")
     private String contrasenna;
-    @JoinColumn(name = "estado_id", referencedColumnName = "estado_id")
-    @ManyToOne(optional = false)
-    private EstadoUsuario estadoId;
-    @JoinColumn(name = "persona_id", referencedColumnName = "persona_id")
-    @ManyToOne(optional = false)
-    private Personas personaId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
-    private Collection<RolesUsuario> rolesUsuarioCollection;
+    
+    // ✅ MISSING FIELD: Mapped to the NOT NULL 'correo' column in the database
+    @NotNull 
+    @Size(min = 1, max = 255) 
+    @Column(name = "correo", unique = true) // Added unique constraint as per DB schema
+    private String correo;
 
-    public Usuarios() {
-    }
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "estado_id", referencedColumnName = "estado_id")
+    private EstadoUsuario estadoId;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "persona_id", referencedColumnName = "persona_id")
+    private Personas persona;
+
+    @OneToMany(mappedBy = "usuarioId", cascade = CascadeType.ALL)
+    private List<RolesUsuario> rolesUsuarioList;
+
+    // Constructores
+    public Usuarios() {}
 
     public Usuarios(Integer usuarioId) {
         this.usuarioId = usuarioId;
     }
-
-    public Usuarios(Integer usuarioId, String nombreusuario, String contrasenna) {
-        this.usuarioId = usuarioId;
+    
+    // ✅ CONSTRUCTOR UPDATED to include 'correo'
+    public Usuarios(String nombreusuario, String contrasenna, String correo, EstadoUsuario estadoId, Personas persona) {
         this.nombreusuario = nombreusuario;
         this.contrasenna = contrasenna;
+        this.correo = correo; // Correo initialization
+        this.estadoId = estadoId;
+        this.persona = persona;
     }
 
+    // Getters y Setters
     public Integer getUsuarioId() {
         return usuarioId;
     }
@@ -99,6 +95,16 @@ public class Usuarios implements Serializable {
     public void setContrasenna(String contrasenna) {
         this.contrasenna = contrasenna;
     }
+    
+    // ✅ GETTER for correo
+    public String getCorreo() {
+        return correo;
+    }
+
+    // ✅ SETTER for correo
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
     public EstadoUsuario getEstadoId() {
         return estadoId;
@@ -108,46 +114,37 @@ public class Usuarios implements Serializable {
         this.estadoId = estadoId;
     }
 
-    public Personas getPersonaId() {
-        return personaId;
+    public Personas getPersona() {
+        return persona;
     }
 
-    public void setPersonaId(Personas personaId) {
-        this.personaId = personaId;
+    public void setPersona(Personas persona) {
+        this.persona = persona;
     }
 
-    @XmlTransient
-    public Collection<RolesUsuario> getRolesUsuarioCollection() {
-        return rolesUsuarioCollection;
+    public List<RolesUsuario> getRolesUsuarioList() {
+        return rolesUsuarioList;
     }
 
-    public void setRolesUsuarioCollection(Collection<RolesUsuario> rolesUsuarioCollection) {
-        this.rolesUsuarioCollection = rolesUsuarioCollection;
+    public void setRolesUsuarioList(List<RolesUsuario> rolesUsuarioList) {
+        this.rolesUsuarioList = rolesUsuarioList;
     }
 
+    // equals y hashCode usando solo PK
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (usuarioId != null ? usuarioId.hashCode() : 0);
-        return hash;
+        return usuarioId != null ? usuarioId.hashCode() : 0;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuarios)) {
-            return false;
-        }
-        Usuarios other = (Usuarios) object;
-        if ((this.usuarioId == null && other.usuarioId != null) || (this.usuarioId != null && !this.usuarioId.equals(other.usuarioId))) {
-            return false;
-        }
-        return true;
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Usuarios)) return false;
+        Usuarios other = (Usuarios) obj;
+        return usuarioId != null && usuarioId.equals(other.usuarioId);
     }
 
     @Override
     public String toString() {
-        return "com.mycompany.learnmate.entities.Usuarios[ usuarioId=" + usuarioId + " ]";
+        return "Usuarios[ usuarioId=" + usuarioId + ", nombreusuario=" + nombreusuario + ", correo=" + correo + " ]"; // Added correo to toString
     }
-    
 }

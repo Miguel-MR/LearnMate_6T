@@ -1,0 +1,130 @@
+<ui:composition template="../TemplateSitio.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+
+        <h:form id="formGeneral" enctype="multipart/form-data">
+
+            <h:messages id="messages" layout="list" style="color: red; margin-bottom: 15px;" globalOnly="true"/>
+
+            <p>Importar usuarios mediante CSV:</p>
+            <h:inputFile value="#{controllerUsuario.file}" />
+            <h:commandButton value="Subir CSV"
+                             action="#{controllerUsuario.procesarUsuariosCsv()}" 
+                             styleClass="btn btn-primary">
+                <f:ajax execute="@form" render="usuariosTableContainer :formGeneral:messages" onevent="handleAjaxEvents(data)" />
+            </h:commandButton> 
+
+            <div style="margin: 1em 0;">
+                <h:button value="➕ Agregar Usuario"
+                          outcome="/views/usuarios/index"
+                          styleClass="btn btn-success" />
+            </div>
+
+            <h:panelGroup id="usuariosTableContainer">
+
+                <h:dataTable value="#{controllerUsuario.listaUsuarios}" 
+                             var="item"
+                             styleClass="jsf-data-tables table table-striped" 
+                             headerClass="table-header">
+
+                    <h:column>
+                        <f:facet name="header">Nombres</f:facet>
+                        <h:outputText value="#{item.persona.primerNombre} #{item.persona.segundoNombre}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Apellidos</f:facet>
+                        <h:outputText value="#{item.persona.primerApellido} #{item.persona.segundoApellido}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Tipo documento</f:facet>
+                        <h:outputText value="#{item.persona.tipoDocumento}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Documento</f:facet>
+                        <h:outputText value="#{item.persona.identificacion}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Correo Electrónico</f:facet>
+                        <h:outputText value="#{item.correo}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Rol Asignado</f:facet>
+                        <h:outputText value="#{controllerUsuario.obtenerRolPrincipal(item)}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Acciones</f:facet>
+
+                        <h:commandButton value="Editar" 
+                                         action="#{controllerPersona.prepararEdicion(item.persona)}" 
+                                         styleClass="btn btn-sm btn-info"
+                                         style="margin-right: 5px;" />
+
+                        <h:commandButton value="Eliminar" 
+                                         action="#{controllerUsuario.eliminar(item)}" 
+                                         onclick="return confirm('¿Está seguro de eliminar este usuario?');"
+                                         styleClass="btn btn-sm btn-danger">
+                            <f:ajax execute="@this" render="usuariosTableContainer :formGeneral:messages" onevent="handleAjaxEvents(data)" />
+                        </h:commandButton>
+                    </h:column>
+
+                </h:dataTable>
+            </h:panelGroup>
+        </h:form>
+
+        <script>
+            function initDataTables() {
+                // Destruir la instancia existente antes de recrearla (es crucial para AJAX)
+                if ($.fn.DataTable.isDataTable('.jsf-data-tables')) {
+                    $('.jsf-data-tables').DataTable().destroy();
+                }
+
+                // Inicialización de la tabla
+                $('.jsf-data-tables').DataTable({
+                    dom: 'Bfrtip',
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                    },
+                    pageLength: 50,
+                    buttons: [
+                        {extend: 'copy', text: 'Copiar', className: 'btn btn-copy', exportOptions: {columns: [0, 1, 2, 3, 4]}},
+                        {extend: 'csv', text: 'CSV', className: 'btn btn-info', exportOptions: {columns: [0, 1, 2, 3, 4]}},
+                        {extend: 'excel', text: 'Excel', className: 'btn btn-success', exportOptions: {columns: [0, 1, 2, 3, 4]}},
+                        {extend: 'pdf', text: 'PDF', className: 'btn btn-danger', exportOptions: {columns: [0, 1, 2, 3, 4]},
+                            customize: function (doc) {
+                                doc.pageMargins = [20, 20, 20, 20];
+                                doc.defaultStyle.fontSize = 10;
+                                doc.styles.tableHeader.fontSize = 12;
+                            }
+                        },
+                        {extend: 'print', text: 'Imprimir', className: 'btn btn-imp', exportOptions: {columns: [0, 1, 2, 3, 4]}}
+                    ]
+                });
+            }
+
+            // Función manejadora de eventos AJAX (Reemplaza a oncomplete)
+            function handleAjaxEvents(data) {
+                // El estado 'success' es cuando la respuesta del servidor ha llegado y el DOM se está actualizando.
+                if (data.status === 'success') {
+                    // Usamos un pequeño retraso para asegurar que JSF termine de renderizar antes de re-inicializar DataTables
+                    setTimeout(initDataTables, 50);
+                }
+            }
+
+            // Llamada inicial al cargar la página
+            $(document).ready(function () {
+                initDataTables();
+            });
+        </script>
+
+    </ui:define>
+</ui:composition>

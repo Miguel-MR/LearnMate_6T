@@ -29,4 +29,6 @@ public interface RolesFacadeLocal {
 
     int count();
     
+    Roles findByNombreRol(String nombreRol);
+    
 }

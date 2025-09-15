@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            height: 100vh;
+            padding-top: 20px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #474f57;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .sidebar ul li a:hover {
+            background-color: #495057;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .header {
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        .card h3 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .card p {
+            color: #6c757d;
+            margin: 0;
+        }
+    </style>
+
+    <body>
+
+        <ui:composition template="./TemplateSitio.xhtml">
+
+            <ui:define name="content">           
+                <h:panelGroup layout="block" styleClass="container">
+                    <div class="page-header">
+                        <h1 class="all-tittles">Rendimiento Académico<small> General</small></h1>
+                    </div>
+                </h:panelGroup>
+
+                
+                <h:panelGroup id="modalHelp" layout="block" styleClass="modal fade">
+                    <f:passThroughAttribute name="tabindex" value="-1" />
+                    <f:passThroughAttribute name="role" value="dialog" />
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title text-center all-tittles">Ayuda del sistema</h4>
+                            </div>
+                            <div class="modal-body">
+                                En esta pantalla podrás visualizar el promedio de tus indicadores de rendimiento en base a tus calificaciones evaluadas por los docentes, separados por asignatura.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                    <i class="zmdi zmdi-thumb-up"></i> &nbsp; De acuerdo
+                                </button>
+                            </div>
+                        </div>
+                    </div>*//
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" styleClass="main-content">
+                    <h:panelGroup layout="block" styleClass="cards">
+                        <h:panelGroup layout="block" styleClass="card">
+                            <i class="fas fa-users"></i>
+                            <h3>#{controllerDashboard.totalUsuarios}</h3>
+                            <p>Usuarios Registrados</p>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="card">
+                            <i class="fas fa-user-graduate"></i>
+                            <h3>#{controllerDashboard.totalEstudiantes}</h3>
+                            <p>Estudiantes</p>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="card">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <h3>#{controllerDashboard.totalProfesores}</h3>
+                            <p>Profesores</p>
+                        </h:panelGroup>                        
+                        <h:panelGroup layout="block" styleClass="card">
+                            <i class="fas fa-chalkboard-teacher"></i>                         
+                            <h3>#{controllerDashboard.totalAcudientes}</h3>
+                            <p>Acudientes</p>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="card">
+                            <i class="fas fa-book"></i>
+                            <h3>#{controllerDashboard.totalGrados}</h3>
+                            <p>Cursos Registrados</p>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <!-- Gráfica de usuarios -->
+                    <h:panelGroup layout="block" style="width:400px; margin:auto; margin-bottom:30px;">
+                        <canvas id="usuariosPieChart" width="400" height="400"></canvas>
+                        <div style="text-align:center; margin-top:10px;">
+                            <strong>Total Usuarios:</strong> #{controllerDashboard.totalUsuarios}
+                        </div>
+                        <div style="text-align:center; margin-top:20px;">
+                            <strong>Distribución de Usuarios Registrados</strong>
+                            <div style="display:flex; justify-content:center; align-items:center; gap:20px; margin-top:10px;">
+                                <span style="display:flex; align-items:center;">
+                                    <span style="width:20px; height:20px; background:#007bff; display:inline-block; margin-right:5px; border-radius:50%;"></span>
+                                    Estudiantes
+                                </span>
+                                <span style="display:flex; align-items:center;">
+                                    <span style="width:20px; height:20px; background:#28a745; display:inline-block; margin-right:5px; border-radius:50%;"></span>
+                                    Profesores
+                                </span>
+                                <span style="display:flex; align-items:center;">
+                                    <span style="width:20px; height:20px; background:#ffc107; display:inline-block; margin-right:5px; border-radius:50%;"></span>
+                                    Acudientes
+                                </span>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var totalEstudiantes = #{controllerDashboard.totalEstudiantes};
+                            var totalProfesores = #{controllerDashboard.totalProfesores};
+                            var totalAcudientes = #{controllerDashboard.totalAcudientes};
+                            var totalUsuarios = totalEstudiantes + totalProfesores + totalAcudientes;
+
+                            var data = [totalEstudiantes, totalProfesores, totalAcudientes];
+                            var labels = ['Estudiantes', 'Profesores', 'Acudientes'];
+                            var colors = ['#007bff', '#28a745', '#ffc107'];
+
+                            var ctx = document.getElementById('usuariosPieChart').getContext('2d');
+                            new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        data: data,
+                                        backgroundColor: colors,
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            display: false 
+                                        },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function(context) {
+                                                    var value = context.parsed;
+                                                    var percentage = totalUsuarios > 0 ? ((value / totalUsuarios) * 100).toFixed(1) : 0;
+                                                    return context.label + ': ' + value + ' (' + percentage + '%)';
+                                                }
+                                            }
+                                        },
+                                        title: {
+                                            display: false
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+
+                </h:panelGroup>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

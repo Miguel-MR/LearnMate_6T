@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="./TemplateSitio.xhtml">
+        <ui:define name="content">
+
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="all-tittles">Sistema Escolar </h1>
+                </div>
+            </div>
+            <div class="container-fluid"  style="margin: 50px 0;">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <img src="#{request.contextPath}/resources/assets/img/user03.png" alt="user" class="img-responsive center-box" style="max-width: 110px;"/>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
+                        Bienvenido a la sección para editar la información de usuario, para poder editar la informacion del usuario deberás guardar los datos
+                    </div>
+                </div>
+            </div>  
+            <div class="container-fluid">
+                <div class="container-flat-form">
+                    <div class="title-flat-form title-flat-blue">Editar Persona</div>
+                    <h:form styleClass="form-padding">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material" style="position:relative;">
+                                    <h:outputLabel for="primerNombre" value="Primer Nombre:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}" required="true" styleClass="material-control tooltips-general" maxlength="50" style="position:relative;z-index:1;"
+                                                 requiredMessage="El primer nombre es obligatorio."
+                                                 validatorMessage="Solo letras, máximo 50 caracteres.">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,50}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí el primer nombre" />
+                                        <f:ajax event="blur" render="msgPrimerNombre" />
+                                    </h:inputText>
+                                    <h:message for="primerNombre" id="msgPrimerNombre" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material" style="position:relative;">
+                                    <h:outputLabel for="segundoNombre" value="Segundo Nombre:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}" styleClass="material-control tooltips-general" maxlength="50" style="position:relative;z-index:1;"
+                                                 validatorMessage="Solo letras, máximo 50 caracteres.">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,50}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí el segundo nombre" />
+                                        <f:ajax event="blur" render="msgSegundoNombre" />
+                                    </h:inputText>
+                                    <h:message for="segundoNombre" id="msgSegundoNombre" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material" style="position:relative;">
+                                    <h:outputLabel for="primerApellido" value="Primer Apellido:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}" required="true" styleClass="material-control tooltips-general" maxlength="50" style="position:relative;z-index:1;"
+                                                 requiredMessage="El primer apellido es obligatorio."
+                                                 validatorMessage="Solo letras, máximo 50 caracteres.">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,50}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí el primer apellido" />
+                                        <f:ajax event="blur" render="msgPrimerApellido" />
+                                    </h:inputText>
+                                    <h:message for="primerApellido" id="msgPrimerApellido" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material" style="position:relative;">
+                                    <h:outputLabel for="segundoApellido" value="Segundo Apellido:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;"/>
+                                    <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}" styleClass="material-control tooltips-general" maxlength="50"
+                                                 style="width:100%;margin-top:0.5em;position:relative;z-index:1;"
+                                                 validatorMessage="Solo letras, máximo 50 caracteres.">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,50}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí el segundo apellido" />
+                                        <f:ajax event="blur" render="msgSegundoApellido" />
+                                    </h:inputText>
+                                    <h:message for="segundoApellido" id="msgSegundoApellido" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="tipoDocumento" value="Tipo de Documento:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:selectOneMenu id="tipoDocumento" value="#{controllerPersona.con.tipoDocumento}" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                     requiredMessage="Seleccione un tipo de documento">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Registro Civil" itemValue="RC" />
+                                        <f:selectItem itemLabel="Tarjeta de Identidad" itemValue="TI" />
+                                        <f:selectItem itemLabel="Cédula de Ciudadanía" itemValue="CC" />
+                                        <f:selectItem itemLabel="Cédula de Extranjería" itemValue="CE" />
+                                        <f:selectItem itemLabel="Permiso por Protección Temporal" itemValue="PPT" />
+                                        <f:ajax event="change" render="msgTipoDocumento" />
+                                    </h:selectOneMenu>
+                                    <h:message for="tipoDocumento" id="msgTipoDocumento" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="identificacion" value="Número de Documento:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}" required="true" styleClass="material-control tooltips-general" maxlength="20" style="position:relative;z-index:1;"
+                                                 requiredMessage="El número de documento es obligatorio."
+                                                 validatorMessage="Solo números, mínimo 5 y máximo 20 caracteres.">
+                                        <f:validateRegex pattern="[0-9]{5,20}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí el documento" />
+                                        <f:ajax event="blur" render="msgIdentificacion" />
+                                    </h:inputText>
+                                    <h:message for="identificacion" id="msgIdentificacion" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="genero" value="Género:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:selectOneMenu id="genero" value="#{controllerPersona.con.genero}" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                     requiredMessage="Seleccione un género">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                        <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                                        <f:ajax event="change" render="msgGenero" />
+                                    </h:selectOneMenu>
+                                    <h:message for="genero" id="msgGenero" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="fechaNacimiento" value="#{controllerPersona.con.fechaNacimiento}" styleClass="material-control tooltips-general"  style="position:relative;z-index:1;"
+                                                 required="true" requiredMessage="La fecha de nacimiento es obligatoria."
+                                                 validatorMessage="Fecha requerida (yyyy-MM-dd)">
+                                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                                        <f:passThroughAttribute name="type" value="date" />
+                                        <f:passThroughAttribute name="placeholder" value="yyyy-MM-dd" />
+                                        <f:ajax event="blur" render="msgFechaNacimiento" />
+                                    </h:inputText>
+                                    <h:message for="fechaNacimiento" id="msgFechaNacimiento" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="direccion" value="Dirección:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="direccion" value="#{controllerPersona.con.direccion}" styleClass="material-control tooltips-general" maxlength="100" style="position:relative;z-index:1;"
+                                                 required="true" requiredMessage="La dirección es obligatoria."
+                                                 validatorMessage="Dirección requerida, máximo 100 caracteres.">
+                                        <f:validateRegex pattern=".{1,100}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí la dirección" />
+                                        <f:ajax event="blur" render="msgDireccion" />
+                                    </h:inputText>
+                                    <h:message for="direccion" id="msgDireccion" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="telefono" value="Teléfono:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="telefono" value="#{controllerPersona.con.telefono}" styleClass="material-control tooltips-general" maxlength="15" style="position:relative;z-index:1;"
+                                                 required="true" requiredMessage="El teléfono es obligatorio."
+                                                 validatorMessage="Solo números, mínimo 7 y máximo 15 caracteres.">
+                                        <f:validateRegex pattern="[0-9]{7,15}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí el teléfono" />
+                                        <f:ajax event="blur" render="msgTelefono" />
+                                    </h:inputText>
+                                    <h:message for="telefono" id="msgTelefono" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="correo" value="Correo Electrónico:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}" styleClass="material-control tooltips-general" maxlength="100" style="position:relative;z-index:1;"
+                                                 required="true" requiredMessage="El correo electrónico es obligatorio."
+                                                 validatorMessage="Correo electrónico no válido.">
+                                        <f:validateRegex pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                                        <f:passThroughAttribute name="placeholder" value="Escribe aquí el correo electrónico" />
+                                        <f:ajax event="blur" render="msgCorreo" />
+                                    </h:inputText>
+                                    <h:message for="correo" id="msgCorreo" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <!-- Datos de usuario -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="nombreusuario" value="Nombre de Usuario:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputText id="nombreusuario" value="#{controllerPersona.nuevoUsuario.nombreusuario}" required="true" styleClass="material-control tooltips-general input-check-user" maxlength="20" style="position:relative;z-index:1;"
+                                                 requiredMessage="El nombre de usuario es obligatorio."
+                                                 validatorMessage="Solo letras y números, sin espacios, 4-20 caracteres.">
+                                        <f:validateRegex pattern="[a-zA-Z0-9]{4,20}" />
+                                        <f:passThroughAttribute name="placeholder" value="Nombre de usuario" />
+                                        <f:ajax event="blur" render="msgNombreUsuario" />
+                                    </h:inputText>
+                                    <h:message for="nombreusuario" id="msgNombreUsuario" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="contrasenna" value="Contraseña:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputSecret id="contrasenna" value="#{controllerPersona.nuevoUsuario.contrasenna}" required="true" styleClass="material-control tooltips-general" maxlength="200" style="position:relative;z-index:1;"
+                                                   requiredMessage="La contraseña es obligatoria."
+                                                   validatorMessage="Contraseña requerida, mínimo 6 caracteres.">
+                                        <f:validateRegex pattern=".{6,200}" />
+                                        <f:passThroughAttribute name="placeholder" value="Contraseña" />
+                                        <f:ajax event="blur" render="msgContrasenna" />
+                                    </h:inputSecret>
+                                    <h:message for="contrasenna" id="msgContrasenna" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="confirmarContrasenna" value="Confirmar Contraseña:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:inputSecret id="confirmarContrasenna" value="#{controllerPersona.confirmarContrasenna}" required="true" styleClass="material-control tooltips-general" maxlength="200" style="position:relative;z-index:1;"
+                                                   requiredMessage="Debe confirmar la contraseña."
+                                                   validatorMessage="Las contraseñas no coinciden o campo vacío.">
+                                        <f:validateRegex pattern=".{6,200}" />
+                                        <f:passThroughAttribute name="placeholder" value="Repite la contraseña" />
+                                        <f:ajax event="blur" render="msgConfirmarContrasenna" />
+                                    </h:inputSecret>
+                                    <h:message for="confirmarContrasenna" id="msgConfirmarContrasenna" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="rolId" value="Rol del Usuario:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:selectOneMenu id="rolId" value="#{controllerPersona.rolSeleccionado}" converter="rolesConverter" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                     requiredMessage="Seleccione un rol">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{controllerPersona.listaRoles}" var="rol"
+                                                       itemLabel="#{rol.nombreRol}" itemValue="#{rol}" />
+                                        <f:ajax event="change" render="msgRolId" />
+                                    </h:selectOneMenu>
+                                    <h:message for="rolId" id="msgRolId" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="group-material">
+                                    <h:outputLabel for="estadoId" value="Estado del Usuario:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                    <h:selectOneMenu id="estadoId" value="#{controllerPersona.nuevoUsuario.estadoId}" converter="estadoUsuarioConverter" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                     requiredMessage="Seleccione un estado">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{controllerPersona.listaEstados}" var="estado"
+                                                       itemLabel="#{estado.nombreEstado}" itemValue="#{estado}" />
+                                        <f:ajax event="change" render="msgEstadoId" />
+                                    </h:selectOneMenu>
+                                    <h:message for="estadoId" id="msgEstadoId" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-12">
+                                        <p class="text-center">
+                                             <h:commandButton value="Actualizar" action="#{controllerPersona.actualizarPersona()}" styleClass="btn btn-primary" />                   
+                            <h:link outcome="/views/personas/index.xhtml" value="Cancelar" style="margin-left:1em" />
+                            <h:messages globalOnly="true" layout="table" />
+                                        </p>
+                                    </div>
+                           
+
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+</html>

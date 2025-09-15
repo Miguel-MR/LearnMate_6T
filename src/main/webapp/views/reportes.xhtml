@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <ul class="nav nav-tabs nav-justified" role="tablist">
+                        <li role="presentation" class="active"><a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Estadísticas</a></li>
+                        <li role="presentation"><a href="#bitacora" aria-controls="bitacora" role="tab" data-toggle="tab">Bitácora</a></li>
+                        <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reportes y boletín</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Estadísticas -->
+                        <div role="tabpanel" class="tab-pane fade in active" id="statistics">
+                            <div class="container-fluid"  style="margin: 50px 0;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 col-md-3">
+                                        <img src="#{request.contextPath}/resources/assets/icons/estadisticas.png" alt="chart" class="img-responsive center-box" style="max-width: 120px;"/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
+                                        Bienvenido al área de reporte y estadísticas, de la institucion aquí encontrarás a detalle y consolidada la información de todo el plantel educativo.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid">
+                                <div class="page-header">
+                                    <h2 class="all-tittles">Reporte <small>en general</small></h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="text-center all-tittles">total usuarios</h3>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover text-center">
+                                                <thead>
+                                                    <tr class="success">
+                                                        <th class="text-center">Tipo usuario</th>
+                                                        <th class="text-center">N. Usuarios</th>
+                                                        <th class="text-center">Porcentaje</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat value="#{reporteBean.usuarios}" var="usuario">
+                                                        <tr>
+                                                            <td>#{usuario.tipo}</td>
+                                                            <td>#{usuario.cantidad}</td>
+                                                            <td>#{usuario.porcentaje}</td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr class="info">
+                                                        <th class="text-center">Total</th>
+                                                        <th class="text-center">#{reporteBean.totalUsuarios}</th>
+                                                        <th class="text-center">100%</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Asignaturas por curso -->
+                                <div class="page-header">
+                                    <h2 class="all-tittles">Asignaturas <small>por curso</small></h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="text-center all-tittles">Asignaturas estudiantes</h3>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover text-center">
+                                                <thead>
+                                                    <tr class="success">
+                                                        <th class="text-center">Asignatura</th>
+                                                        <th class="text-center">N. Estudiantes</th>
+                                                        <th class="text-center">Porcentaje</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat value="#{reporteBean.asignaturas}" var="asig">
+                                                        <tr>
+                                                            <td>#{asig.nombre}</td>
+                                                            <td>#{asig.cantidad}</td>
+                                                            <td>#{asig.porcentaje}</td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr class="info">
+                                                        <th class="text-center">Total</th>
+                                                        <th class="text-center">#{reporteBean.totalEstudiantesAsignaturas}</th>
+                                                        <th class="text-center">100%</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Libros por categoría -->
+                                <div class="page-header">
+                                    <h2 class="all-tittles">libros <small>por categorías</small></h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="text-center all-tittles">libros por categoría de asignatura</h3>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover text-center">
+                                                <thead>
+                                                    <tr class="success">
+                                                        <th class="text-center">Categoría</th>
+                                                        <th class="text-center">Código</th>
+                                                        <th class="text-center">Total libros</th>
+                                                        <th class="text-center">Porcentaje</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat value="#{reporteBean.categoriasLibros}" var="cat">
+                                                        <tr>
+                                                            <td>#{cat.nombre}</td>
+                                                            <td>#{cat.codigo}</td>
+                                                            <td>#{cat.total}</td>
+                                                            <td>#{cat.porcentaje}</td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr class="info">
+                                                        <th class="text-center"></th>
+                                                        <th class="text-center">Total libros</th>
+                                                        <th class="text-center">#{reporteBean.totalLibros}</th>
+                                                        <th class="text-center">100%</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Bitácora -->
+                        <div role="tabpanel" class="tab-pane fade" id="bitacora">
+                            <div class="container-fluid"  style="margin: 50px 0;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 col-md-3">
+                                        <img src="assets/img/user-sesion.png" alt="users-sesion" class="img-responsive center-box" style="max-width: 120px;"/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
+                                        Bienvenido al área de bitácora, aquí se muestran los registros de los últimos 15 usuarios (personal administrativo, docentes, administradores y estudiantes) que han iniciado sesión en el sistema. Recuerda eliminar los registros de la bitácora cada año para que el sistema funcione correctamente.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid">
+                                <section id="cd-timeline" class="cd-container">
+                                    <ui:repeat value="#{reporteBean.bitacora}" var="log">
+                                        <div class="cd-timeline-block">
+                                            <div class="cd-timeline-img">
+                                                <img src="assets/img/user01.png" alt="user-picture"/>
+                                            </div>
+                                            <div class="cd-timeline-content">
+                                                <h4 class="text-center">#{log.numero} - #{log.nombre} (#{log.rol})</h4>
+                                                <p class="text-center">
+                                                    <i class="zmdi zmdi-timer zmdi-hc-fw"></i> Inicio: <em>#{log.inicio}</em> &nbsp;&nbsp;&nbsp;
+                                                    <i class="zmdi zmdi-time zmdi-hc-fw"></i> Finalización: <em>#{log.fin}</em>
+                                                </p>
+                                                <span class="cd-date"><i class="zmdi zmdi-calendar-note zmdi-hc-fw"></i> #{log.fecha}</span>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </section>
+                            </div>
+                        </div>
+                        <!-- Reportes y boletin-->
+                        <div role="tabpanel" class="tab-pane fade" id="reports">
+                            
+                            <!-- Fichas vacías -->
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="page-header">
+                                        <h2 class="all-tittles">fichas <small>vacías</small></h2>
+                                    </div><br/>
+                                    <ui:repeat value="#{reporteBean.fichas}" var="ficha">
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="full-reset report-content">
+                                                <p class="text-center">
+                                                    <i class="zmdi zmdi-file-text zmdi-hc-5x"></i>
+                                                </p>
+                                                <h3 class="text-center">#{ficha.nombre}</h3>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                                <!-- Reportes generales -->
+                                <div class="row">
+                                    <div class="page-header">
+                                        <h2 class="all-tittles">reportes <small>generales</small></h2>
+                                    </div><br/>
+                                    <ui:repeat value="#{reporteBean.reportesGenerales}" var="reporte">
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="full-reset report-content">
+                                                <p class="text-center">
+                                                    <i class="zmdi zmdi-trending-up zmdi-hc-5x"></i>
+                                                </p>
+                                                <h3 class="text-center">#{reporte.nombre}</h3>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                                <!-- Reportes pendientes -->
+                                <div class="row">
+                                    <div class="page-header">
+                                        <h2 class="all-tittles">Boletin</h2>
+                                    </div><br/>
+                                    <ui:repeat value="#{reporteBean.reportesPendientes}" var="pendiente">
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="full-reset report-content">
+                                                <p class="text-center">
+                                                    <i class="zmdi zmdi-calendar-close zmdi-hc-5x"></i>
+                                                </p>
+                                                <h3 class="text-center">#{pendiente.nombre}</h3>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                    
+                                    <button 
+                                        style="background-color: blue; color: white; padding: 10px 20px; border: none; border-radius: 5px;" 
+                                        onclick="window.location.href='boletin.xhtml';">
+                                        Generar
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

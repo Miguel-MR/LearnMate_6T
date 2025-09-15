@@ -29,4 +29,7 @@ public interface EstadoUsuarioFacadeLocal {
 
     int count();
     
+    // 🚨 ¡AÑADE ESTA LÍNEA AQUÍ! 🚨
+    EstadoUsuario findByNombreEstado(String nombreEstado);
+    
 }

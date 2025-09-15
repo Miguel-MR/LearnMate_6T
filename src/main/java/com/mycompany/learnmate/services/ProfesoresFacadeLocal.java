@@ -5,6 +5,7 @@
 package com.mycompany.learnmate.services;
 
 import com.mycompany.learnmate.entities.Profesores;
+import com.mycompany.learnmate.entities.Personas;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +29,6 @@ public interface ProfesoresFacadeLocal {
     List<Profesores> findRange(int[] range);
 
     int count();
+      Profesores findByPersona(Personas persona);
     
 }

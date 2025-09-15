@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.learnmate.services;
 
 import com.mycompany.learnmate.entities.Cursos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.NoResultException; // Import required
 
 /**
  *
@@ -28,4 +25,18 @@ public class CursosFacade extends AbstractFacade<Cursos> implements CursosFacade
         super(Cursos.class);
     }
     
+    // ✅ Implementación del método findByNombre(String)
+    @Override
+    public Cursos findByNombre(String nombreCurso) {
+        try {
+            // Se asume que el método o NamedQuery se llama 'Cursos.findByNombreCurso'
+            // y que la entidad Cursos tiene un campo 'nombreCurso'.
+            return em.createNamedQuery("Cursos.findByNombreCurso", Cursos.class)
+                    .setParameter("nombreCurso", nombreCurso)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // Devuelve null si no se encuentra ningún curso con ese nombre
+            return null;
+        }
+    }
 }

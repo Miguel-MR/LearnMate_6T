@@ -5,9 +5,11 @@
 package com.mycompany.learnmate.services;
 
 import com.mycompany.learnmate.entities.Profesores;
+import com.mycompany.learnmate.entities.Personas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -26,6 +28,17 @@ public class ProfesoresFacade extends AbstractFacade<Profesores> implements Prof
 
     public ProfesoresFacade() {
         super(Profesores.class);
+    }
+    
+     @Override
+    public Profesores findByPersona(Personas persona) {
+        try {
+            return em.createQuery("SELECT p FROM Profesores p WHERE p.persona = :persona", Profesores.class)
+                     .setParameter("persona", persona)
+                     .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
 }

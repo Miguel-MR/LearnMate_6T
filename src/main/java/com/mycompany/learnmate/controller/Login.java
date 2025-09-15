@@ -1,9 +1,12 @@
 package com.mycompany.learnmate.controller;
 
 import com.mycompany.learnmate.entities.Permisos;
+import com.mycompany.learnmate.entities.RolesUsuario;
 import com.mycompany.learnmate.entities.Usuarios;
+import com.mycompany.learnmate.entities.Profesores;
 import com.mycompany.learnmate.services.PermisosFacadeLocal;
 import com.mycompany.learnmate.services.UsuariosFacadeLocal;
+import com.mycompany.learnmate.services.ProfesoresFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -19,15 +22,19 @@ import java.util.List;
 @SessionScoped
 public class Login implements Serializable {
 
-    private String usuario;
+    private String nombreusuario;
     private String contrasenna;
     private Usuarios user;
     private List<Permisos> listaPermisos;
 
     @EJB
     private UsuariosFacadeLocal ufl;
+
     @EJB
     private PermisosFacadeLocal pfl;
+
+    @EJB
+    private ProfesoresFacadeLocal profesoresEJB; // agrega la fachada de Profesores
 
     public Login() {
         user = new Usuarios();
@@ -41,12 +48,12 @@ public class Login implements Serializable {
         this.listaPermisos = listaPermisos;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getNombreusuario() {
+        return nombreusuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setNombreusuario(String nombreusuario) {
+        this.nombreusuario = nombreusuario;
     }
 
     public String getContrasenna() {
@@ -58,24 +65,48 @@ public class Login implements Serializable {
     }
 
     public String iniciarSesion() {
-        String hashed = hashSHA256(contrasenna);
-        System.out.println("Usuario ingresado: " + usuario);
-        System.out.println("Contraseña original: " + contrasenna);
-        System.out.println("Hash SHA-256 generado: " + hashed);
+        try {
+            String hash = hashSHA256(contrasenna);
+            user = ufl.iniciarSesion(nombreusuario, hash);
 
-        user = ufl.iniciarSesion(usuario, hashed);
+            if (user != null) {
+                FacesContext contexto = FacesContext.getCurrentInstance();
+                HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
+                this.listaPermisos = pfl.permisosByUser(user);
+                sesion.setAttribute("usuario", user);
+                
+                // 🔑 Guardar también el profesor asociado al usuario (si aplica)
+    if (user.getPersona() != null) {
+        Profesores profesor = profesoresEJB.findByPersona(user.getPersona());
+        if (profesor != null) {
+            sesion.setAttribute("profesorLogueado", profesor);
+        }
+    }
+                // Redirigir según rol
+                for (RolesUsuario ru : user.getRolesUsuarioList()) {
+                    int rolId = ru.getRolId().getRolId();
+                    if (rolId == 1) {
+                        return "views/inicio.xhtml?faces-redirect=true";
+                    }
+                    if (rolId == 3) {
+                        return "views/iniciousuario.xhtml?faces-redirect=true";
+                    }
+                }
 
-        if (user != null && user.getNombreusuario() != null && user.getContrasenna() != null) {
-            System.out.println("Inicio de sesión exitoso. Usuario encontrado: " + user.getNombreusuario());
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario sin permisos asignados", null);
+                contexto.addMessage(null, fm);
+                return null;
+            } else {
+                FacesContext contexto = FacesContext.getCurrentInstance();
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña inválidos", null);
+                contexto.addMessage(null, fm);
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
             FacesContext contexto = FacesContext.getCurrentInstance();
-            HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
-            this.listaPermisos = pfl.permisosByUser(user);
-            sesion.setAttribute("usuario", user);
-            return "views/TemplateSitio?faces-redirect=true";
-        } else {
-            System.out.println("Inicio de sesión fallido.");
-            FacesContext contexto = FacesContext.getCurrentInstance();
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña inválidos", "MSG_ERROR");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al iniciar sesión: " + e.getMessage(), null);
             contexto.addMessage(null, fm);
             return null;
         }
@@ -85,7 +116,6 @@ public class Login implements Serializable {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashedBytes = md.digest(input.getBytes());
-
             StringBuilder sb = new StringBuilder();
             for (byte b : hashedBytes) {
                 sb.append(String.format("%02x", b));
@@ -95,14 +125,13 @@ public class Login implements Serializable {
             throw new RuntimeException("Error al generar hash SHA-256", e);
         }
     }
-    
+
     public String cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "login?faces-redirect=true"; // Cambia "login" si tu página tiene otro nombre
+        return "login?faces-redirect=true";
     }
+
     public void invalidarSesion() {
-        
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        
     }
 }

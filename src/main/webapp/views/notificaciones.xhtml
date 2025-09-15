@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./TemplateSitio.xhtml">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="all-tittles">Sistema institucional <small>Añadir notificación</small></h1>
+                </div>
+            </div>
+            <div class="container-fluid" style="margin: 50px 0;">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <img src="#{request.contextPath}../resources/assets/img/chat.png" alt="pdf" class="img-responsive center-box" style="max-width: 110px;"/>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
+                        Bienvenido a la sección para agregar notificaciones, para realizarlo, deberás llenar todos los campos para poder registrar la nueva notificación.
+                    </div>
+                </div>
+            </div>
+
+            <ui:define name="content">
+                <h:form styleClass="form-padding">
+                    <h:messages globalOnly="true" layout="table" style="margin-top: 1em;"/>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <legend><i class="zmdi zmdi-account-box"></i>Información básica de la notificación</legend><br/>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="group-material">
+                                <h:inputText id="notificacionId" 
+                                             value="#{controllerNotificacion.notif.notificacionId}" 
+                                             styleClass="tooltips-general material-control" 
+                                             required="true" 
+                                             title="Escribe el código de la notificación, solamente números">
+                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el número de notificación"/>
+                                    <f:passThroughAttribute name="maxlength" value="20"/>
+                                </h:inputText>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Número de notificación</label>
+                                <h:message for="notificacionId" styleClass="text-danger"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="group-material">
+                                <h:inputText id="asunto" value="#{controllerNotificacion.notif.asunto}" styleClass="tooltips-general material-control" required="true" title="Escribe el título del asunto">
+                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el asunto de la notificación"/>
+                                    <f:passThroughAttribute name="maxlength" value="70"/>
+                                </h:inputText>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Asunto</label>
+                                <h:message for="asunto" styleClass="text-danger"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="group-material">
+                                <h:inputText id="nombreInstructor" 
+                                             value="#{controllerNotificacion.nombreInstructorTemp}" 
+                                             styleClass="tooltips-general material-control" 
+                                             required="true" 
+                                             title="Escribe el nombre del profesor quien notifica">
+                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el nombre del instructor que notifica"/>
+                                    <f:passThroughAttribute name="maxlength" value="70"/>
+                                </h:inputText>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Nombre del instructor quien registra</label>
+                                <h:message for="nombreInstructor" styleClass="text-danger"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="group-material">
+                                <h:inputText id="nombreInstitucion" value="#{controllerNotificacion.nombreInstitucionTemp}" styleClass="tooltips-general material-control" required="true" title="Escribe el nombre de la institución">
+                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el nombre de la institución"/>
+                                    <f:passThroughAttribute name="maxlength" value="50"/>
+                                </h:inputText>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Nombre de la institución</label>
+                                <h:message for="nombreInstitucion" styleClass="text-danger"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <legend><i class="zmdi zmdi-bookmark-outline"></i> &nbsp; Categoría</legend><br/>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="group-material">
+                                <span>Categoría de notificación</span>
+                                <h:selectOneMenu id="categoria" value="#{controllerNotificacion.notif.categoriaNotificacion}" styleClass="tooltips-general material-control" required="true" title="Elige la categoría de notificación">
+                                    <f:selectItem itemLabel="Selecciona una categoría" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="Citación" itemValue="Citación"/>
+                                    <f:selectItem itemLabel="Entrega de notas" itemValue="Entrega de notas"/>
+                                    <f:selectItem itemLabel="Salida pedagógica" itemValue="Salida pedagógica"/>
+                                </h:selectOneMenu>
+                                <h:message for="categoria" styleClass="text-danger"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <legend><i class="zmdi zmdi-label"></i> &nbsp; Demás datos de notificación</legend><br/>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="group-material">
+                                <h:inputText id="fecha" 
+                                             value="#{controllerNotificacion.notif.fechaNotificacion}" 
+                                             styleClass="material-control tooltips-general"  
+                                             style="position:relative;z-index:1;"
+                                             required="true" 
+                                             requiredMessage="Selecciona aquí la fecha de notificación."
+                                             validatorMessage="Fecha requerida (yyyy-MM-dd)">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                    <f:passThroughAttribute name="type" value="date" />
+                                    <f:passThroughAttribute name="placeholder" value="yyyy-MM-dd" />
+                                    <f:ajax event="blur" render="@this msgFechaNacimiento" />
+                                </h:inputText>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Fecha</label>
+                                <h:message for="fecha" styleClass="text-danger"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="group-material">
+                                <h:inputTextarea id="descripcion" value="#{controllerNotificacion.notif.descripcion}" styleClass="material-control tooltips-general" required="true" title="Descripción de notificación" rows="4">
+                                    <f:passThroughAttribute name="placeholder" value="Describe la notificación"/>
+                                    <f:passThroughAttribute name="maxlength" value="10000"/>
+                                </h:inputTextarea>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <h:message for="descripcion" styleClass="text-danger"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <p class="text-center">
+                                <button type="reset" class="btn btn-info" style="margin-right: 20px;"><i class="zmdi zmdi-roller"></i> &nbsp;&nbsp; Limpiar</button>
+                                <h:commandButton value="Enviar" action="#{controllerNotificacion.guardar()}" styleClass="btn btn-primary">
+                                    <f:ajax execute="@form" render="@form"/>
+                                </h:commandButton>
+                            </p>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

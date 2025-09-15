@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <ui:composition template="./TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                <h:form style="margin:20px;">
+
+                    <!-- Mensajes de validación -->
+                    <h:messages globalOnly="true" layout="table" style="color:red;"/>
+
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <!-- Destinatarios -->
+                        <h:outputLabel for="destinatarios" value="Para:" />
+                        <h:inputText id="destinatarios" 
+                                     value="#{correoController.destinatarios}" 
+                                     style="width:300px"
+                                     required="true"
+                                     requiredMessage="Debe ingresar al menos un destinatario" />
+                        <h:outputText value="(separar correos con coma)" 
+                                      style="font-size:small;color:gray;" />
+
+                        <!-- Asunto -->
+                        <h:outputLabel for="asunto" value="Asunto:" />
+                        <h:inputText id="asunto" 
+                                     value="#{correoController.asunto}" 
+                                     style="width:300px"
+                                     required="true"
+                                     requiredMessage="Debe ingresar un asunto" />
+
+                        <!-- Mensaje -->
+                        <h:outputLabel for="mensaje" value="Mensaje:" />
+                        <h:inputTextarea id="mensaje" 
+                                         value="#{correoController.mensaje}" 
+                                         rows="6" cols="40"
+                                         required="true"
+                                         requiredMessage="Debe escribir un mensaje" />
+
+                        <!-- Botón -->
+                        <h:outputLabel />
+                        <h:commandButton value="📧 Enviar Correos" 
+                                         action="#{correoController.enviar}" 
+                                         style="background-color:#4CAF50; color:white; padding:5px 15px; border:none; border-radius:5px;"/>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

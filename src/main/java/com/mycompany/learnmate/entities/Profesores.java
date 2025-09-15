@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.learnmate.entities;
 
 import java.io.Serializable;
@@ -22,10 +18,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author castr
- */
 @Entity
 @Table(name = "profesores")
 @XmlRootElement
@@ -40,9 +32,12 @@ public class Profesores implements Serializable {
     @Basic(optional = false)
     @Column(name = "profesor_id")
     private Integer profesorId;
+    
+    // ✅ Campo renombrado de 'personaId' a 'persona'
     @JoinColumn(name = "persona_id", referencedColumnName = "persona_id")
     @ManyToOne(optional = false)
-    private Personas personaId;
+    private Personas persona; 
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesorId")
     private Collection<AsignacionAsignaturas> asignacionAsignaturasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesorId")
@@ -63,12 +58,14 @@ public class Profesores implements Serializable {
         this.profesorId = profesorId;
     }
 
-    public Personas getPersonaId() {
-        return personaId;
+    // ✅ Getter renombrado a getPersona()
+    public Personas getPersona() {
+        return persona;
     }
 
-    public void setPersonaId(Personas personaId) {
-        this.personaId = personaId;
+    // ✅ Setter renombrado a setPersona()
+    public void setPersona(Personas persona) {
+        this.persona = persona;
     }
 
     @XmlTransient
@@ -98,7 +95,6 @@ public class Profesores implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Profesores)) {
             return false;
         }
@@ -113,5 +109,4 @@ public class Profesores implements Serializable {
     public String toString() {
         return "com.mycompany.learnmate.entities.Profesores[ profesorId=" + profesorId + " ]";
     }
-    
 }

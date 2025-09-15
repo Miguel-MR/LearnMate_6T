@@ -5,10 +5,8 @@
 package com.mycompany.learnmate.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,18 +14,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+// import javax.persistence.Column; // Línea duplicada, se puede omitir o eliminar
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Past;
+// import java.util.Date; // Línea duplicada, se puede omitir o eliminar
+import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 
 /**
  *
- * @author castr
+ * @author yeico
  */
 @Entity
 @Table(name = "personas")
@@ -44,8 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Personas.findByGenero", query = "SELECT p FROM Personas p WHERE p.genero = :genero"),
     @NamedQuery(name = "Personas.findByFechaNacimiento", query = "SELECT p FROM Personas p WHERE p.fechaNacimiento = :fechaNacimiento"),
     @NamedQuery(name = "Personas.findByDireccion", query = "SELECT p FROM Personas p WHERE p.direccion = :direccion"),
-    @NamedQuery(name = "Personas.findByTelefono", query = "SELECT p FROM Personas p WHERE p.telefono = :telefono"),
-    @NamedQuery(name = "Personas.findByCorreoElectronico", query = "SELECT p FROM Personas p WHERE p.correoElectronico = :correoElectronico")})
+    @NamedQuery(name = "Personas.findByTelefono", query = "SELECT p FROM Personas p WHERE p.telefono = :telefono")
+})
 public class Personas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -85,6 +86,7 @@ public class Personas implements Serializable {
     @Size(min = 1, max = 9)
     @Column(name = "genero")
     private String genero;
+    @Past // valida que la fecha sea pasada
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
@@ -94,17 +96,23 @@ public class Personas implements Serializable {
     @Size(max = 20)
     @Column(name = "telefono")
     private String telefono;
-    @Size(max = 100)
-    @Column(name = "correo_electronico")
-    private String correoElectronico;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Profesores> profesoresCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Estudiantes> estudiantesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Usuarios> usuariosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Acudientes> acudientesCollection;
+    @OneToOne(mappedBy = "persona")
+    private Usuarios usuario;
+
+    public Usuarios getUsuario() {
+        return usuario;
+    }
+
+    // 🏆 CORRECCIÓN CLAVE: Mantenimiento de la bidireccionalidad
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
+
+        // Si el usuario no es nulo y la persona a la que apunta ese usuario
+        // no es esta persona (this), entonces corrígelo.
+        if (usuario != null && usuario.getPersona() != this) {
+            usuario.setPersona(this);
+        }
+    }
 
     public Personas() {
     }
@@ -210,50 +218,14 @@ public class Personas implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    // ❌ ELIMINADO: Getter y Setter para correoElectronico
+    /* public String getCorreoElectronico() { 
+        // ...
     }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setCorreoElectronico(String correoElectronico) { 
+        // ...
     }
-
-    @XmlTransient
-    public Collection<Profesores> getProfesoresCollection() {
-        return profesoresCollection;
-    }
-
-    public void setProfesoresCollection(Collection<Profesores> profesoresCollection) {
-        this.profesoresCollection = profesoresCollection;
-    }
-
-    @XmlTransient
-    public Collection<Estudiantes> getEstudiantesCollection() {
-        return estudiantesCollection;
-    }
-
-    public void setEstudiantesCollection(Collection<Estudiantes> estudiantesCollection) {
-        this.estudiantesCollection = estudiantesCollection;
-    }
-
-    @XmlTransient
-    public Collection<Usuarios> getUsuariosCollection() {
-        return usuariosCollection;
-    }
-
-    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
-        this.usuariosCollection = usuariosCollection;
-    }
-
-    @XmlTransient
-    public Collection<Acudientes> getAcudientesCollection() {
-        return acudientesCollection;
-    }
-
-    public void setAcudientesCollection(Collection<Acudientes> acudientesCollection) {
-        this.acudientesCollection = acudientesCollection;
-    }
-
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -278,5 +250,5 @@ public class Personas implements Serializable {
     public String toString() {
         return "com.mycompany.learnmate.entities.Personas[ personaId=" + personaId + " ]";
     }
-    
+
 }
