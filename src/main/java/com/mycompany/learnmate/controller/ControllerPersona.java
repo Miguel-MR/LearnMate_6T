@@ -81,7 +81,6 @@ public class ControllerPersona implements Serializable {
             nuevoUsuario.setContrasenna(hashedPassword);
 
             cfl.create(con);
-            nuevoUsuario.setPersonaId(con);
             nuevoUsuario.setEstadoId(estadoFacade.find(1));
             usuariosFacade.create(nuevoUsuario);
 

@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Roles.findByNombreRol", query = "SELECT r FROM Roles r WHERE r.nombreRol = :nombreRol")})
 public class Roles implements Serializable {
 
+    @OneToMany(mappedBy = "idRol")
+    private Collection<Usuarios> usuariosCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -120,6 +123,15 @@ public class Roles implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.learnmate.entities.Roles[ rolId=" + rolId + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Usuarios> getUsuariosCollection() {
+        return usuariosCollection;
+    }
+
+    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
+        this.usuariosCollection = usuariosCollection;
     }
     
     

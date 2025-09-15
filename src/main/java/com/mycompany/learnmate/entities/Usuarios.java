@@ -5,9 +5,7 @@
 package com.mycompany.learnmate.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,16 +15,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author castr
+ * @author yeico
  */
 @Entity
 @Table(name = "usuarios")
@@ -57,11 +53,9 @@ public class Usuarios implements Serializable {
     @JoinColumn(name = "estado_id", referencedColumnName = "estado_id")
     @ManyToOne(optional = false)
     private EstadoUsuario estadoId;
-    @JoinColumn(name = "persona_id", referencedColumnName = "persona_id")
-    @ManyToOne(optional = false)
-    private Personas personaId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
-    private Collection<RolesUsuario> rolesUsuarioCollection;
+    @JoinColumn(name = "id_rol", referencedColumnName = "rol_id")
+    @ManyToOne
+    private Roles idRol;
 
     public Usuarios() {
     }
@@ -108,21 +102,12 @@ public class Usuarios implements Serializable {
         this.estadoId = estadoId;
     }
 
-    public Personas getPersonaId() {
-        return personaId;
+    public Roles getIdRol() {
+        return idRol;
     }
 
-    public void setPersonaId(Personas personaId) {
-        this.personaId = personaId;
-    }
-
-    @XmlTransient
-    public Collection<RolesUsuario> getRolesUsuarioCollection() {
-        return rolesUsuarioCollection;
-    }
-
-    public void setRolesUsuarioCollection(Collection<RolesUsuario> rolesUsuarioCollection) {
-        this.rolesUsuarioCollection = rolesUsuarioCollection;
+    public void setIdRol(Roles idRol) {
+        this.idRol = idRol;
     }
 
     @Override

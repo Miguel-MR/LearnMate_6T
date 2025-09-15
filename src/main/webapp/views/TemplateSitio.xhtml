@@ -19,17 +19,119 @@
         <link href="#{request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>
-            !window.jQuery || document.write('<script src="#{request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>     
-        </script>
+        <!--  <script>
+            !window.jQuery || document.write('<script src="#{request.contextPath}/resources/js/jquery-1.11.2.min.js"><\/script>')     
+        </script>-->
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css"/>
+        <!-- DataTables JS y extensiones de botones -->
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
         <script src="#{request.contextPath}/resources/js/modernizr.js" type="text/javascript"></script>
         <script src="#{request.contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="#{request.contextPath}/resources/js/jquery.mCustomScrollbar.concat.min.js" type="text/javascript"></script>
         <script src="#{request.contextPath}/resources/js/main.js" type="text/javascript"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f8f9fa;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+            .sidebar {
+                width: 250px;
+                background-color: #343a40;
+                color: #fff;
+                height: 100vh;
+                padding-top: 20px;
+            }
+            .sidebar h2 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+            }
+            .sidebar ul li {
+                padding: 15px;
+                text-align: center;
+                border-bottom: 1px solid #474f57;
+            }
+            .sidebar ul li a {
+                color: #fff;
+                text-decoration: none;
+                display: block;
+            }
+            .sidebar ul li a:hover {
+                background-color: #495057;
+            }
+            .main-content {
+                flex: 1;
+                padding: 20px;
+            }
+            .header {
+                background-color: #fff;
+                padding: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .header .logo {
+                font-size: 24px;
+                font-weight: bold;
+            }
+            .header .user-info {
+                display: flex;
+                align-items: center;
+            }
+            .header .user-info img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            .card {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+            .card i {
+                font-size: 40px;
+                margin-bottom: 10px;
+                color: #007bff;
+            }
+            .card h3 {
+                margin: 0;
+                font-size: 24px;
+            }
+            .card p {
+                color: #6c757d;
+                margin: 0;
+            }
+        </style>
     </h:head>
     <a href="TemplateSitio.xhtml"></a>
 
     <h:body> 
+        
+       
         <div id="left">
             <ui:insert name="left">
                 <div class="navbar-lateral full-reset">
@@ -49,29 +151,27 @@
                         <div class="nav-lateral-divider full-reset"></div>
                         <div class="full-reset nav-lateral-list-menu">
                             <ul class="list-unstyled">
-                                <li><a href="inicio.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&#160;&#160;Dashboard</a></li>
                                 <li>
-                                    <div class="dropdown-menu-button"><i class="zmdi zmdi-case zmdi-hc-fw"></i> &#160;&#160;Administración <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
-                                    <ul class="list-unstyled">
-                                        <li><a href="institucion.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>&#160;&#160;Datos institución</a></li>
+                                    <h:link outcome="inicio" style="display: flex; align-items: center; padding: 8px 20px; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 400; background: #34495e; margin-top: 4px;">
+                                        <i class="zmdi zmdi-home zmdi-hc-fw" style="font-size: 20px; margin-right: 10px;"></i>Dashboard  
+                                    </h:link>
+                                </li>                                  
+                                <li style="margin-bottom: 8px;">
+                                    <div class="dropdown-menu-button" style="display: flex; align-items: center; padding: 10px 20px; border-radius: 6px; color: #fff; font-weight: 500; cursor: pointer; background: transparent; transition: background 0.2s;">
+                                        <i class="zmdi zmdi-account-add zmdi-hc-fw" style="font-size: 20px; margin-right: 10px;"></i>Nuevo Usuario
+                                        <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu" style="margin-left:auto;"></i>
+                                    </div>
+                                    <ul class="list-unstyled" style="margin:0 0 0 4px; padding:0;">
+                                        <li>
+                                            <h:link outcome="usuario" style="display: flex; align-items: center; padding: 8px 20px; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 400; background: #34495e; margin-top: 4px;">
+                                                <i class="zmdi zmdi-face zmdi-hc-fw" style="font-size: 20px; margin-right: 10px;"></i>Nuevo usuario
+                                            </h:link>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <div class="dropdown-menu-button"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&#160;&#160;Registro de usuarios <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
-                                    <ul class="list-unstyled">
-                                        <li><a href="admin.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i> &#160;&#160;Nuevo administrador</a></li>
-                                        <li><a href="docente.html"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i> &#160;&#160;Nuevo docente</a></li>
-                                        <li><a href="estudiante.html"><i class="zmdi zmdi-accounts zmdi-hc-fw"></i>&#160;&#160;Nuevo estudiante</a></li>
-                                        <li><a href="administrativo.html"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i>&#160;&#160;Nuevo personal administrativo</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <div class="dropdown-menu-button"><i class="zmdi zmdi-book zmdi-hc-fw"></i>&#160;&#160;Contenido Educativo <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
-                                    <ul class="list-unstyled">
-                                        <li><a href="book.html"><i class="zmdi zmdi-book zmdi-hc-fw"></i>&#160;&#160;Nuevo Contenido</a></li>
-                                        <li><a href="catalog.html"><i class="zmdi zmdi-bookmark-outline zmdi-hc-fw"></i>&#160;&#160;Catálogo</a></li>
-                                    </ul>
-                                </li>
+
+
+
                                 <li>
                                     <div class="dropdown-menu-button"><i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&#160;&#160; Evaluación y seguimiento <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
                                     <ul class="list-unstyled">
@@ -81,12 +181,32 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <div class="dropdown-menu-button"><i class="zmdi zmdi-alarm zmdi-hc-fw"></i> &#160;&#160;Gestión de Notificaciones <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
-                                    <ul class="list-unstyled">
-                                        <li><a href="notificacion.html"><i class="zmdi zmdi-calendar zmdi-hc-fw"></i>&#160;&#160;Añadir Notificación</a></li>
-                                    </ul>
+                                    <li style="margin-bottom: 8px;">
+                                        <div class="dropdown-menu-button" style="display: flex; align-items: center; padding: 10px 20px; border-radius: 6px; color: #fff; font-weight: 500; cursor: pointer; background: transparent; transition: background 0.2s;">
+                                            <i class="zmdi zmdi-alarm zmdi-hc-fw" style="font-size: 20px; margin-right: 10px;"></i>Gestion de Notificaciones
+                                            <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu" style="margin-left:auto;"></i>
+                                        </div>
+                                        <ul class="list-unstyled" style="margin:0 0 0 4px; padding:0;">
+                                            <li>
+                                                <h:link outcome="notificaciones" style="display: flex; align-items: center; padding: 8px 20px; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 400; background: #34495e; margin-top: 4px;">
+                                                    <i class="zmdi zmdi-calendar zmdi-hc-fw" style="font-size: 20px; margin-right: 10px;"></i>Añadir Notificación
+                                                </h:link>
+                                            </li>
+                                            <li>
+                                                <h:link outcome="listNotif" style="display: flex; align-items: center; padding: 8px 20px; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 400; background: #34495e; margin-top: 4px;">
+                                                    <i class="zmdi zmdi-calendar zmdi-hc-fw" style="font-size: 20px; margin-right: 10px;"></i>Lista Notificaciones
+                                                </h:link>
+                                            </li>
+                                        </ul>
+                                    </li>                                
+                                </li>  
+                                <li>
+                                    <h:link outcome="reportes" style="display: flex; align-items: center; padding: 8px 20px; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 400; background: #34495e; margin-top: 4px;">
+                                        <i class="zmdi zmdi-trending-up zmdi-hc-fw" style="font-size: 20px; margin-right: 10px;"></i>Reportes y estadísticas
+                                    </h:link>
                                 </li>
-                                <li><a href="reportes.html"><i class="zmdi zmdi-trending-up zmdi-hc-fw"></i> &#160;&#160;Reportes y estadísticas</a></li>
+
+
                                 <li><a href="configuracion.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&#160;&#160;Configuraciones avanzadas</a></li>
                             </ul>
                         </div>
@@ -129,204 +249,265 @@
 
                 </ui:insert>
             </div>
-            <div class="container">
-                <div class="page-header">
-                    <h1 class="all-tittles">Sistema Escolar <small>Administración Usuarios</small></h1>
-                </div>
-            </div>
-            <div class="container-fluid">
-                <ul class="nav nav-tabs nav-justified"  style="font-size: 17px;">
-                    <li role="presentation"><a href="admin.html">Administración</a></li>
-                    <li role="presentation"><a href="docente.html">Docentes</a></li>
-                    <li role="presentation"  class="active"><a href="estudiante.html">Estudiante</a></li>
-                    <li role="presentation"><a href="administrativo.html">Personal administrativo</a></li>
-                </ul>
-            </div>
-
-            <div class="container-fluid"  style="margin: 50px 0;">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-3">
-                        <img src="#{request.contextPath}/resources/assets/img/user03.png" alt="user" class="img-responsive center-box" style="max-width: 110px;"/>
+            <div id="content" class="content">
+                <ui:insert name="content">
+                    <div class="container">
+                        <div class="page-header">
+                            <h1 class="all-tittles">Sistema Escolar <small>Administración Usuarios</small></h1>
+                        </div>
                     </div>
-                    <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
-                        Bienvenido a la sección para registrar nuevos estudiantes, para poder registrar un estudiante deberás de llenar todos los campos del siguiente formulario
+                    <div class="container-fluid"  style="margin: 50px 0;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-3">
+                                <img src="#{request.contextPath}/resources/assets/img/user03.png" alt="user" class="img-responsive center-box" style="max-width: 110px;"/>
+                            </div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
+                                Bienvenido a la sección para registrar nuevos usuario, para poder registrar un usuario deberás de llenar todos los campos del siguiente formulario
+                            </div>
+                        </div>
+                    </div>   
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12 lead">
+                                <li>
+                                    <h:link outcome="list">
+                                        Listado de Usuarios                             
+                                    </h:link>
+                                </li>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="container-fluid">
+                        <div class="container-flat-form">
+                            <div class="title-flat-form title-flat-blue">Registrar un nuevo Usuario</div>
+                            <h:form styleClass="form-padding">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material" style="position:relative;">
+                                            <h:outputLabel for="primerNombre" value="Primer Nombre:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}" required="true" styleClass="material-control tooltips-general" maxlength="50" style="position:relative;z-index:1;"
+                                                         requiredMessage="El primer nombre es obligatorio."
+                                                         validatorMessage="Solo letras, máximo 50 caracteres.">
+                                                <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,50}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí el primer nombre" />
+                                                <f:ajax event="blur" render="msgPrimerNombre" />
+                                            </h:inputText>
+                                            <h:message for="primerNombre" id="msgPrimerNombre" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material" style="position:relative;">
+                                            <h:outputLabel for="segundoNombre" value="Segundo Nombre:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}" styleClass="material-control tooltips-general" maxlength="50" style="position:relative;z-index:1;"
+                                                         validatorMessage="Solo letras, máximo 50 caracteres.">
+                                                <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,50}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí el segundo nombre" />
+                                                <f:ajax event="blur" render="msgSegundoNombre" />
+                                            </h:inputText>
+                                            <h:message for="segundoNombre" id="msgSegundoNombre" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material" style="position:relative;">
+                                            <h:outputLabel for="primerApellido" value="Primer Apellido:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}" required="true" styleClass="material-control tooltips-general" maxlength="50" style="position:relative;z-index:1;"
+                                                         requiredMessage="El primer apellido es obligatorio."
+                                                         validatorMessage="Solo letras, máximo 50 caracteres.">
+                                                <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,50}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí el primer apellido" />
+                                                <f:ajax event="blur" render="msgPrimerApellido" />
+                                            </h:inputText>
+                                            <h:message for="primerApellido" id="msgPrimerApellido" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material" style="position:relative;">
+                                            <h:outputLabel for="segundoApellido" value="Segundo Apellido:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;"/>
+                                            <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}" styleClass="material-control tooltips-general" maxlength="50"
+                                                         style="width:100%;margin-top:0.5em;position:relative;z-index:1;"
+                                                         validatorMessage="Solo letras, máximo 50 caracteres.">
+                                                <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,50}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí el segundo apellido" />
+                                                <f:ajax event="blur" render="msgSegundoApellido" />
+                                            </h:inputText>
+                                            <h:message for="segundoApellido" id="msgSegundoApellido" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="tipoDocumento" value="Tipo de Documento:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:selectOneMenu id="tipoDocumento" value="#{controllerPersona.con.tipoDocumento}" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                             requiredMessage="Seleccione un tipo de documento">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Registro Civil" itemValue="RC" />
+                                                <f:selectItem itemLabel="Tarjeta de Identidad" itemValue="TI" />
+                                                <f:selectItem itemLabel="Cédula de Ciudadanía" itemValue="CC" />
+                                                <f:selectItem itemLabel="Cédula de Extranjería" itemValue="CE" />
+                                                <f:selectItem itemLabel="Permiso por Protección Temporal" itemValue="PPT" />
+                                                <f:ajax event="change" render="msgTipoDocumento" />
+                                            </h:selectOneMenu>
+                                            <h:message for="tipoDocumento" id="msgTipoDocumento" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="identificacion" value="Número de Documento:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}" required="true" styleClass="material-control tooltips-general" maxlength="20" style="position:relative;z-index:1;"
+                                                         requiredMessage="El número de documento es obligatorio."
+                                                         validatorMessage="Solo números, mínimo 5 y máximo 20 caracteres.">
+                                                <f:validateRegex pattern="[0-9]{5,20}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí el documento" />
+                                                <f:ajax event="blur" render="msgIdentificacion" />
+                                            </h:inputText>
+                                            <h:message for="identificacion" id="msgIdentificacion" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="genero" value="Género:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:selectOneMenu id="genero" value="#{controllerPersona.con.genero}" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                             requiredMessage="Seleccione un género">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                                                <f:ajax event="change" render="msgGenero" />
+                                            </h:selectOneMenu>
+                                            <h:message for="genero" id="msgGenero" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="fechaNacimiento" value="#{controllerPersona.con.fechaNacimiento}" styleClass="material-control tooltips-general"  style="position:relative;z-index:1;"
+                                                         required="true" requiredMessage="La fecha de nacimiento es obligatoria."
+                                                         validatorMessage="Fecha requerida (yyyy-MM-dd)">
+                                                <f:convertDateTime pattern="yyyy-MM-dd" />
+                                                <f:passThroughAttribute name="type" value="date" />
+                                                <f:passThroughAttribute name="placeholder" value="yyyy-MM-dd" />
+                                                <f:ajax event="blur" render="msgFechaNacimiento" />
+                                            </h:inputText>
+                                            <h:message for="fechaNacimiento" id="msgFechaNacimiento" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="direccion" value="Dirección:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="direccion" value="#{controllerPersona.con.direccion}" styleClass="material-control tooltips-general" maxlength="100" style="position:relative;z-index:1;"
+                                                         required="true" requiredMessage="La dirección es obligatoria."
+                                                         validatorMessage="Dirección requerida, máximo 100 caracteres.">
+                                                <f:validateRegex pattern=".{1,100}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí la dirección" />
+                                                <f:ajax event="blur" render="msgDireccion" />
+                                            </h:inputText>
+                                            <h:message for="direccion" id="msgDireccion" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="telefono" value="Teléfono:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="telefono" value="#{controllerPersona.con.telefono}" styleClass="material-control tooltips-general" maxlength="15" style="position:relative;z-index:1;"
+                                                         required="true" requiredMessage="El teléfono es obligatorio."
+                                                         validatorMessage="Solo números, mínimo 7 y máximo 15 caracteres.">
+                                                <f:validateRegex pattern="[0-9]{7,15}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí el teléfono" />
+                                                <f:ajax event="blur" render="msgTelefono" />
+                                            </h:inputText>
+                                            <h:message for="telefono" id="msgTelefono" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="correo" value="Correo Electrónico:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}" styleClass="material-control tooltips-general" maxlength="100" style="position:relative;z-index:1;"
+                                                         required="true" requiredMessage="El correo electrónico es obligatorio."
+                                                         validatorMessage="Correo electrónico no válido.">
+                                                <f:validateRegex pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                                                <f:passThroughAttribute name="placeholder" value="Escribe aquí el correo electrónico" />
+                                                <f:ajax event="blur" render="msgCorreo" />
+                                            </h:inputText>
+                                            <h:message for="correo" id="msgCorreo" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <!-- Datos de usuario -->
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="nombreusuario" value="Nombre de Usuario:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputText id="nombreusuario" value="#{controllerPersona.nuevoUsuario.nombreusuario}" required="true" styleClass="material-control tooltips-general input-check-user" maxlength="20" style="position:relative;z-index:1;"
+                                                         requiredMessage="El nombre de usuario es obligatorio."
+                                                         validatorMessage="Solo letras y números, sin espacios, 4-20 caracteres.">
+                                                <f:validateRegex pattern="[a-zA-Z0-9]{4,20}" />
+                                                <f:passThroughAttribute name="placeholder" value="Nombre de usuario" />
+                                                <f:ajax event="blur" render="msgNombreUsuario" />
+                                            </h:inputText>
+                                            <h:message for="nombreusuario" id="msgNombreUsuario" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="contrasenna" value="Contraseña:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputSecret id="contrasenna" value="#{controllerPersona.nuevoUsuario.contrasenna}" required="true" styleClass="material-control tooltips-general" maxlength="200" style="position:relative;z-index:1;"
+                                                           requiredMessage="La contraseña es obligatoria."
+                                                           validatorMessage="Contraseña requerida, mínimo 6 caracteres.">
+                                                <f:validateRegex pattern=".{6,200}" />
+                                                <f:passThroughAttribute name="placeholder" value="Contraseña" />
+                                                <f:ajax event="blur" render="msgContrasenna" />
+                                            </h:inputSecret>
+                                            <h:message for="contrasenna" id="msgContrasenna" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="confirmarContrasenna" value="Confirmar Contraseña:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:inputSecret id="confirmarContrasenna" value="#{controllerPersona.confirmarContrasenna}" required="true" styleClass="material-control tooltips-general" maxlength="200" style="position:relative;z-index:1;"
+                                                           requiredMessage="Debe confirmar la contraseña."
+                                                           validatorMessage="Las contraseñas no coinciden o campo vacío.">
+                                                <f:validateRegex pattern=".{6,200}" />
+                                                <f:passThroughAttribute name="placeholder" value="Repite la contraseña" />
+                                                <f:ajax event="blur" render="msgConfirmarContrasenna" />
+                                            </h:inputSecret>
+                                            <h:message for="confirmarContrasenna" id="msgConfirmarContrasenna" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="rolId" value="Rol del Usuario:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:selectOneMenu id="rolId" value="#{controllerPersona.rolSeleccionado}" converter="rolesConverter" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                             requiredMessage="Seleccione un rol">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{controllerPersona.listaRoles}" var="rol"
+                                                               itemLabel="#{rol.nombreRol}" itemValue="#{rol}" />
+                                                <f:ajax event="change" render="msgRolId" />
+                                            </h:selectOneMenu>
+                                            <h:message for="rolId" id="msgRolId" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="group-material">
+                                            <h:outputLabel for="estadoId" value="Estado del Usuario:" style="display:block;position:relative;z-index:2;background:#fff;padding-right:8px;left:8px;top:8px;width:auto;" />
+                                            <h:selectOneMenu id="estadoId" value="#{controllerPersona.nuevoUsuario.estadoId}" converter="estadoUsuarioConverter" required="true" styleClass="material-control tooltips-general" style="position:relative;z-index:1;"
+                                                             requiredMessage="Seleccione un estado">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{controllerPersona.listaEstados}" var="estado"
+                                                               itemLabel="#{estado.nombreEstado}" itemValue="#{estado}" />
+                                                <f:ajax event="change" render="msgEstadoId" />
+                                            </h:selectOneMenu>
+                                            <h:message for="estadoId" id="msgEstadoId" style="color: #e74c3c; font-size: 16px; margin-left: 0; display:inline; line-height:1; padding:0; margin:0; background:none; vertical-align:middle;" showDetail="true" showSummary="false" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <p class="text-center">
+                                            <h:commandButton value="Registrar" action="#{controllerPersona.crearPersona()}" styleClass="btn btn-primary" />
+                                            <h:messages globalOnly="true" layout="table" />
+                                        </p>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div></ui:insert>
             </div>
 
             <!-- Form section -->
-            <div class="container-fluid">
-                <div class="container-flat-form">
-                    <div class="title-flat-form title-flat-blue">Registrar un nuevo estudiante</div>
-                    <h:form styleClass="form-padding">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="primerNombre" value="Primer Nombre:" />
-                                <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}" required="true" styleClass="material-control tooltips-general" maxlength="50" placeholder="Escribe aquí el primer nombre" />
-                                <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}" required="true" styleClass="material-control tooltips-general" maxlength="50">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el primer nombre" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
-                                <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}" styleClass="material-control tooltips-general" maxlength="50" placeholder="Escribe aquí el segundo nombre" />
-                                <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}" styleClass="material-control tooltips-general" maxlength="50">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el segundo nombre" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="primerApellido" value="Primer Apellido:" />
-                                <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}" required="true" styleClass="material-control tooltips-general" maxlength="50" placeholder="Escribe aquí el primer apellido" />
-                                <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}" required="true" styleClass="material-control tooltips-general" maxlength="50">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el primer apellido" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
-                                <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}" styleClass="material-control tooltips-general" maxlength="50" placeholder="Escribe aquí el segundo apellido" />
-                                <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}" styleClass="material-control tooltips-general" maxlength="50">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el segundo apellido" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="tipoDocumento" value="Tipo de Documento:" />
-                                <h:selectOneMenu id="tipoDocumento" value="#{controllerPersona.con.tipoDocumento}" required="true" styleClass="material-control tooltips-general">
-                                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                    <f:selectItem itemLabel="Registro Civil" itemValue="RC" />
-                                    <f:selectItem itemLabel="Tarjeta de Identidad" itemValue="TI" />
-                                    <f:selectItem itemLabel="Cédula de Ciudadanía" itemValue="CC" />
-                                    <f:selectItem itemLabel="Cédula de Extranjería" itemValue="CE" />
-                                    <f:selectItem itemLabel="Permiso por Protección Temporal" itemValue="PPT" />
-                                </h:selectOneMenu>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="identificacion" value="Número de Documento:" />
-                                <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}" required="true" styleClass="material-control tooltips-general" maxlength="20" placeholder="Escribe aquí el documento" />
-                                <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}" required="true" styleClass="material-control tooltips-general" maxlength="20">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el documento" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="genero" value="Género:" />
-                                <h:selectOneMenu id="genero" value="#{controllerPersona.con.genero}" required="true" styleClass="material-control tooltips-general">
-                                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                    <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
-                                    <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
-                                </h:selectOneMenu>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
-                                <h:inputText id="fechaNacimiento" value="#{controllerPersona.con.fechaNacimiento}" styleClass="material-control tooltips-general" placeholder="yyyy-MM-dd">
-                                    <f:convertDateTime pattern="yyyy-MM-dd" />
-                                    <f:passThroughAttribute name="type" value="date" />
-                                    <f:passThroughAttribute name="placeholder" value="yyyy-MM-dd" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="direccion" value="Dirección:" />
-                                <h:inputText id="direccion" value="#{controllerPersona.con.direccion}" styleClass="material-control tooltips-general" maxlength="100" placeholder="Escribe aquí la dirección" />
-                                <h:inputText id="direccion" value="#{controllerPersona.con.direccion}" styleClass="material-control tooltips-general" maxlength="100">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí la dirección" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="telefono" value="Teléfono:" />
-                                <h:inputText id="telefono" value="#{controllerPersona.con.telefono}" styleClass="material-control tooltips-general" maxlength="15" placeholder="Escribe aquí el teléfono" />
-                                <h:inputText id="telefono" value="#{controllerPersona.con.telefono}" styleClass="material-control tooltips-general" maxlength="15">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el teléfono" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="correo" value="Correo Electrónico:" />
-                                <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}" styleClass="material-control tooltips-general" maxlength="100" placeholder="Escribe aquí el correo electrónico" />
-                                <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}" styleClass="material-control tooltips-general" maxlength="100">
-                                    <f:passThroughAttribute name="placeholder" value="Escribe aquí el correo electrónico" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <!-- Datos de usuario -->
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="nombreusuario" value="Nombre de Usuario:" />
-                                <h:inputText id="nombreusuario" value="#{controllerPersona.nuevoUsuario.nombreusuario}" required="true" styleClass="material-control tooltips-general input-check-user" maxlength="20" placeholder="Nombre de usuario" />
-                                <h:inputText id="nombreusuario" value="#{controllerPersona.nuevoUsuario.nombreusuario}" required="true" styleClass="material-control tooltips-general input-check-user" maxlength="20">
-                                    <f:passThroughAttribute name="placeholder" value="Nombre de usuario" />
-                                </h:inputText>
-                                <h:message for="nombreusuario" style="color:red" />
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="contrasenna" value="Contraseña:" />
-                                <h:inputSecret id="contrasenna" value="#{controllerPersona.nuevoUsuario.contrasenna}" required="true" styleClass="material-control tooltips-general" maxlength="200" placeholder="Contraseña" />
-                                <h:inputSecret id="contrasenna" value="#{controllerPersona.nuevoUsuario.contrasenna}" required="true" styleClass="material-control tooltips-general" maxlength="200">
-                                    <f:passThroughAttribute name="placeholder" value="Contraseña" />
-                                </h:inputSecret>
-                                <h:message for="contrasenna" style="color:red" />
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="confirmarContrasenna" value="Confirmar Contraseña:" />
-                                <h:inputSecret id="confirmarContrasenna" value="#{controllerPersona.confirmarContrasenna}" required="true" styleClass="material-control tooltips-general" maxlength="200">
-                                    <f:passThroughAttribute name="placeholder" value="Repite la contraseña" />
-                                </h:inputSecret>
-                                <h:message for="confirmarContrasenna" style="color:red" />
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="rolId" value="Rol del Usuario:" />
-                                <h:selectOneMenu id="rolId" value="#{controllerPersona.rolSeleccionado}" converter="rolesConverter" required="true" styleClass="material-control tooltips-general">
-                                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{controllerPersona.listaRoles}" var="rol"
-                                                   itemLabel="#{rol.nombreRol}" itemValue="#{rol}" />
-                                </h:selectOneMenu>
-                                <h:message for="rolId" style="color:red" />
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="group-material">
-                                <h:outputLabel for="estadoId" value="Estado del Usuario:" />
-                                <h:selectOneMenu id="estadoId" value="#{controllerPersona.nuevoUsuario.estadoId}" converter="estadoUsuarioConverter" required="true" styleClass="material-control tooltips-general">
-                                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{controllerPersona.listaEstados}" var="estado"
-                                                   itemLabel="#{estado.nombreEstado}" itemValue="#{estado}" />
-                                </h:selectOneMenu>
-                                <h:message for="estadoId" style="color:red" />
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <p class="text-center">
-                                <h:commandButton value="Limpiar" type="reset" styleClass="btn btn-info" style="margin-right: 20px;" />
-                                <h:commandButton value="Guardar" action="#{controllerPersona.guardarEstudiante}" styleClass="btn btn-primary" />
-                            </p>
-                        </div>
-                    </div>
-                </h:form>
-                </div>
-            </div>
+
             <!-- Footer -->
             <footer class="footer full-reset">
                 <div class="container-fluid">
@@ -354,7 +535,39 @@
             </footer>
 
         </div>
+        
+        
 
     </h:body>
+    
+     <Script>
+                    function recargarDataTable() {
+                        setTimeout(() => {
+                            // Destruir instancia previa si existe
+                            if ($.fn.DataTable.isDataTable('#t-all')) {
+                                $('#t-all').DataTable().destroy();
+                            }
+                            const tabla = $('#t-all').DataTable({
+                                destroy: true,
+                                dom: 'Bfrtip',
+                                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                                language: {
+                                    url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                                },
+                                pageLength: 50
+                            });
+                            // Insertar los botones encima de la tabla
+                            tabla.buttons().container().appendTo('#botones-dt');
+                        }, 100);
+                    }
+                    jsf.ajax.addOnEvent(function (data) {
+                        if (data.status === 'success') {
+                            recargarDataTable();
+                        }
+                    });
+                    $(document).ready(function () {
+                        recargarDataTable();
+                    });
+                </Script>
 
 </html>

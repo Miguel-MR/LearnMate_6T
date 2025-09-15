@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    
+                    
+                    <h:dataTable value="#{controllerNotificacion.ListarNotificaciones()}"
+                                 var="item"
+                                 styleClass="div-table jsf-data-table table table-striped table-bordered" border="1">
+                        <h:column>
+                            <f:facet name="header">#</f:facet>
+                            <h:outputText value="#{item.notificacionId}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Notificación</f:facet>
+                            <h:outputText value="#{item.nombreNotificacion}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Categoría</f:facet>
+                            <h:outputText value="#{item.categoriaNotificacion}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Fecha de creación</f:facet>
+                            <h:outputText value="#{item.fechaCreacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Asunto</f:facet>
+                            <h:outputText value="#{item.asunto}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Descripción</f:facet>
+                            <h:outputText value="#{item.descripcion}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Fecha</f:facet>
+                            <h:outputText value="#{item.fechaNotificacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Acciones</f:facet>
+                            <h:link outcome="/notificacion/index.xhtml" value="✏️ Editar">
+                                <f:param name="notificacionId" value="#{item.notificacionId}" />
+                            </h:link>
+                            <h:outputText value="\u00A0\u00A0" />
+                            <h:commandLink value="🗑️ Eliminar"
+                                           action="#{controllerNotificacion.eliminar(item)}"
+                                           onclick="return confirm('¿Seguro que deseas eliminar esta notificación?');" />
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -5,10 +5,7 @@
 package com.mycompany.learnmate.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,18 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author castr
+ * @author yeico
  */
 @Entity
 @Table(name = "personas")
@@ -85,9 +78,9 @@ public class Personas implements Serializable {
     @Size(min = 1, max = 9)
     @Column(name = "genero")
     private String genero;
+    @Size(max = 15)
     @Column(name = "fecha_nacimiento")
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     @Size(max = 100)
     @Column(name = "direccion")
     private String direccion;
@@ -97,14 +90,6 @@ public class Personas implements Serializable {
     @Size(max = 100)
     @Column(name = "correo_electronico")
     private String correoElectronico;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Profesores> profesoresCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Estudiantes> estudiantesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Usuarios> usuariosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaId")
-    private Collection<Acudientes> acudientesCollection;
 
     public Personas() {
     }
@@ -186,11 +171,11 @@ public class Personas implements Serializable {
         this.genero = genero;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -216,42 +201,6 @@ public class Personas implements Serializable {
 
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
-    }
-
-    @XmlTransient
-    public Collection<Profesores> getProfesoresCollection() {
-        return profesoresCollection;
-    }
-
-    public void setProfesoresCollection(Collection<Profesores> profesoresCollection) {
-        this.profesoresCollection = profesoresCollection;
-    }
-
-    @XmlTransient
-    public Collection<Estudiantes> getEstudiantesCollection() {
-        return estudiantesCollection;
-    }
-
-    public void setEstudiantesCollection(Collection<Estudiantes> estudiantesCollection) {
-        this.estudiantesCollection = estudiantesCollection;
-    }
-
-    @XmlTransient
-    public Collection<Usuarios> getUsuariosCollection() {
-        return usuariosCollection;
-    }
-
-    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
-        this.usuariosCollection = usuariosCollection;
-    }
-
-    @XmlTransient
-    public Collection<Acudientes> getAcudientesCollection() {
-        return acudientesCollection;
-    }
-
-    public void setAcudientesCollection(Collection<Acudientes> acudientesCollection) {
-        this.acudientesCollection = acudientesCollection;
     }
 
     @Override

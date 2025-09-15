@@ -1,6 +1,7 @@
 package com.mycompany.learnmate.controller;
 
 import com.mycompany.learnmate.entities.Permisos;
+import com.mycompany.learnmate.entities.RolesUsuario;
 import com.mycompany.learnmate.entities.Usuarios;
 import com.mycompany.learnmate.services.PermisosFacadeLocal;
 import com.mycompany.learnmate.services.UsuariosFacadeLocal;
@@ -23,6 +24,8 @@ public class Login implements Serializable {
     private String contrasenna;
     private Usuarios user;
     private List<Permisos> listaPermisos;
+
+    RolesUsuario use = new RolesUsuario();
 
     @EJB
     private UsuariosFacadeLocal ufl;
@@ -65,13 +68,20 @@ public class Login implements Serializable {
 
         user = ufl.iniciarSesion(usuario, hashed);
 
-        if (user != null && user.getNombreusuario() != null && user.getContrasenna() != null) {
+        if (user != null && user.getNombreusuario() != null && user.getContrasenna() != null && user.getIdRol().getRolId() == 1) {
             System.out.println("Inicio de sesión exitoso. Usuario encontrado: " + user.getNombreusuario());
             FacesContext contexto = FacesContext.getCurrentInstance();
             HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
             this.listaPermisos = pfl.permisosByUser(user);
             sesion.setAttribute("usuario", user);
-            return "views/TemplateSitio?faces-redirect=true";
+            return "views/inicio.xhtml?faces-redirect=true";
+        } else if (user != null && user.getNombreusuario() != null && user.getContrasenna() != null && user.getIdRol().getRolId() == 3) {
+            System.out.println("Inicio de sesión exitoso. Usuario encontrado: " + user.getNombreusuario());
+            FacesContext contexto = FacesContext.getCurrentInstance();
+            HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
+            this.listaPermisos = pfl.permisosByUser(user);
+            sesion.setAttribute("usuario", user);
+            return "views/iniciousuario.xhtml?faces-redirect=true";
         } else {
             System.out.println("Inicio de sesión fallido.");
             FacesContext contexto = FacesContext.getCurrentInstance();
@@ -95,14 +105,15 @@ public class Login implements Serializable {
             throw new RuntimeException("Error al generar hash SHA-256", e);
         }
     }
-    
+
     public String cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login?faces-redirect=true"; // Cambia "login" si tu página tiene otro nombre
     }
+
     public void invalidarSesion() {
-        
+
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        
+
     }
 }

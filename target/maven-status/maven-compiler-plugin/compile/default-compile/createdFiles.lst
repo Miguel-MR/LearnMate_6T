@@ -1,4 +1,5 @@
 com\mycompany\learnmate\entities\Cursos.class
+com\mycompany\learnmate\controller\ControllerNotificacion.class
 com\mycompany\learnmate\services\TareasFacadeLocal.class
 com\mycompany\learnmate\services\NotificacionesFacade.class
 com\mycompany\learnmate\services\UsuariosFacade.class
@@ -24,6 +25,7 @@ com\mycompany\learnmate\entities\Estudiantes.class
 com\mycompany\learnmate\security\Filtro.class
 com\mycompany\learnmate\entities\AsignacionAsignaturas.class
 com\mycompany\learnmate\entities\Profesores.class
+com\mycompany\learnmate\reportes\JasperExportManager.class
 com\mycompany\learnmate\entities\Usuarios.class
 com\mycompany\learnmate\services\AbstractFacade.class
 com\mycompany\learnmate\controller\RolesConverter.class
@@ -52,6 +54,7 @@ com\mycompany\learnmate\services\HorariosFacadeLocal.class
 com\mycompany\learnmate\entities\Horarios.class
 com\mycompany\learnmate\services\RolPermisosFacadeLocal.class
 com\mycompany\learnmate\services\EstudiantesAcudientesFacade.class
+com\mycompany\learnmate\reportes\reportesEstudiante.class
 com\mycompany\learnmate\services\NotificacionesFacadeLocal.class
 com\mycompany\learnmate\entities\RolesUsuario.class
 com\mycompany\learnmate\services\RolesUsuarioFacade.class
