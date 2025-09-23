@@ -20,7 +20,7 @@ import java.util.List;
 @SessionScoped
 public class Login implements Serializable {
 
-    private String usuario;
+    private String nombreusuario;
     private String contrasenna;
     private Usuarios user;
     private List<Permisos> listaPermisos;
@@ -45,11 +45,11 @@ public class Login implements Serializable {
     }
 
     public String getUsuario() {
-        return usuario;
+        return nombreusuario;
     }
 
     public void setUsuario(String usuario) {
-        this.usuario = usuario;
+        this.nombreusuario = usuario;
     }
 
     public String getContrasenna() {
@@ -61,12 +61,12 @@ public class Login implements Serializable {
     }
 
     public String iniciarSesion() {
-        String hashed = hashSHA256(contrasenna);
-        System.out.println("Usuario ingresado: " + usuario);
+   
+        System.out.println("Usuario ingresado: " + nombreusuario);
         System.out.println("Contraseña original: " + contrasenna);
-        System.out.println("Hash SHA-256 generado: " + hashed);
+        System.out.println("Hash SHA-256 generado: ");
 
-        user = ufl.iniciarSesion(usuario, hashed);
+        user = ufl.iniciarSesion(nombreusuario, contrasenna);
 
         if (user != null && user.getNombreusuario() != null && user.getContrasenna() != null && user.getIdRol().getRolId() == 1) {
             System.out.println("Inicio de sesión exitoso. Usuario encontrado: " + user.getNombreusuario());

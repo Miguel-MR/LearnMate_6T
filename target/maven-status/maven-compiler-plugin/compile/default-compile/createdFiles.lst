@@ -1,6 +1,7 @@
 com\mycompany\learnmate\entities\Cursos.class
 com\mycompany\learnmate\controller\ControllerNotificacion.class
 com\mycompany\learnmate\services\TareasFacadeLocal.class
+com\mycompany\learnmate\controller\EmailService.class
 com\mycompany\learnmate\services\NotificacionesFacade.class
 com\mycompany\learnmate\services\UsuariosFacade.class
 com\mycompany\learnmate\controller\Login.class
@@ -37,6 +38,7 @@ com\mycompany\learnmate\entities\Boletines.class
 com\mycompany\learnmate\entities\EstudiantesAcudientes.class
 com\mycompany\learnmate\entities\Personas.class
 com\mycompany\learnmate\services\PermisosFacade.class
+com\mycompany\learnmate\controller\CorreoMasivo.class
 com\mycompany\learnmate\services\ProfesoresFacadeLocal.class
 com\mycompany\learnmate\services\AcudientesFacadeLocal.class
 com\mycompany\learnmate\entities\EstadoUsuario.class
@@ -53,6 +55,7 @@ com\mycompany\learnmate\entities\Roles.class
 com\mycompany\learnmate\services\HorariosFacadeLocal.class
 com\mycompany\learnmate\entities\Horarios.class
 com\mycompany\learnmate\services\RolPermisosFacadeLocal.class
+com\mycompany\learnmate\controller\CorreoMasivo$1.class
 com\mycompany\learnmate\services\EstudiantesAcudientesFacade.class
 com\mycompany\learnmate\reportes\reportesEstudiante.class
 com\mycompany\learnmate\services\NotificacionesFacadeLocal.class
@@ -63,6 +66,7 @@ com\mycompany\learnmate\services\RolesUsuarioFacadeLocal.class
 com\mycompany\learnmate\entities\Notificaciones.class
 com\mycompany\learnmate\services\EstudiantesFacadeLocal.class
 com\mycompany\learnmate\services\UsuariosFacadeLocal.class
+com\mycompany\learnmate\controller\EmailService$1.class
 com\mycompany\learnmate\services\CursosFacade.class
 com\mycompany\learnmate\services\TareasFacade.class
 com\mycompany\learnmate\services\EntregasTareasFacadeLocal.class
