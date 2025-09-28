@@ -1,0 +1,86 @@
+<ui:composition template="../TemplateSitio.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+
+        <h:form id="formGeneral" enctype="multipart/form-data">
+
+            <!-- 📂 Subir usuarios desde CSV -->
+            <text>Importar usuarios mediante CSV:</text>
+            <h:inputFile value="#{controllerUsuario.file}" />
+            <h:commandButton value="Subir CSV"
+                             action="#{controllerUsuario.procesarUsuariosCsv()}" />
+
+            <!-- ➕ Botón para agregar usuario -->
+            <div style="margin: 1em 0;">
+                <h:button value="➕ Agregar Usuario"
+                          outcome="/views/usuarios/index"
+                          styleClass="btn btn-success" />
+            </div>
+
+            <!-- 🔘 Botones DataTables -->
+            <div id="botones-dt"></div>
+
+            <!-- 🧾 Tabla de resultados -->
+            <h:panelGroup id="tablaPersonas">
+                <table id="t-all" class="jsf-data-tables display nowrap" width="100%" border="1">
+                    <thead>
+                        <tr>
+                            <th>Primer Nombre</th>
+                            <th>Segundo Nombre</th>
+                            <th>Tipo documento</th>
+                            <th>Documento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{controllerPersona.listarPersonas()}" var="item">
+                            <tr>
+                                <td>#{item.primerNombre}</td>
+                                <td>#{item.segundoNombre}</td>
+                                <td>#{item.tipoDocumento}</td>
+                                <td>#{item.identificacion}</td>
+                                <td>
+                                    <h:link outcome="/views/usuarios/index" value="✏️ Editar" style="margin-right: 1em;">
+                                        <f:param name="personaId" value="#{item.personaId}" />
+                                    </h:link>
+                                    <h:commandLink value="🗑️ Eliminar"
+                                                   action="#{controllerPersona.eliminarPersona(item)}"
+                                                   onclick="return confirm('¿Seguro que deseas eliminar esta persona?');" />
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+            </h:panelGroup>
+        </h:form>
+
+        <!-- ⚙️ DataTables config -->
+        <script>
+            $('.jsf-data-tables').DataTable({
+                dom: 'Bfrtip',
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
+                pageLength: 50,
+                buttons: [
+                    { extend: 'copy', text: 'Copiar', className: 'btn btn-copy', exportOptions: { columns: [0,1,2] } },
+                    { extend: 'csv',  text: 'CSV',   className: 'btn btn-info', exportOptions: { columns: [0,1,2] } },
+                    { extend: 'excel',text: 'Excel', className: 'btn btn-success', exportOptions: { columns: [0,1,2] } },
+                    { extend: 'pdf',  text: 'PDF',   className: 'btn btn-danger', exportOptions: { columns: [0,1,2] },
+                        customize: function (doc) {
+                            doc.pageMargins = [20,20,20,20];
+                            doc.defaultStyle.fontSize = 10;
+                            doc.styles.tableHeader.fontSize = 12;
+                        }
+                    },
+                    { extend: 'print', text: 'Imprimir', className: 'btn btn-imp', exportOptions: { columns: [0,1,2] } }
+                ]
+            });
+        </script>
+
+    </ui:define>
+</ui:composition>

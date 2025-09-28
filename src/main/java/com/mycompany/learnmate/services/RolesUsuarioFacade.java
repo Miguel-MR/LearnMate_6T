@@ -10,6 +10,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  *
@@ -34,6 +36,12 @@ public class RolesUsuarioFacade extends AbstractFacade<RolesUsuario> implements 
         return em.createQuery("SELECT r FROM RolesUsuario r WHERE r.usuarioId = :usuario", RolesUsuario.class)
                 .setParameter("usuario", usuario)
                 .getResultList();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void create(RolesUsuario ru) {
+        super.create(ru);
     }
 
 }

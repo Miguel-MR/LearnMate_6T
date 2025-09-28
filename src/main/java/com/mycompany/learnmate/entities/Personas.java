@@ -1,10 +1,11 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.learnmate.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Past;
+import java.util.Date;
+
 
 /**
  *
@@ -78,9 +85,10 @@ public class Personas implements Serializable {
     @Size(min = 1, max = 9)
     @Column(name = "genero")
     private String genero;
-    @Size(max = 15)
+    @Past // valida que la fecha sea pasada
     @Column(name = "fecha_nacimiento")
-    private String fechaNacimiento;
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
     @Size(max = 100)
     @Column(name = "direccion")
     private String direccion;
@@ -171,11 +179,11 @@ public class Personas implements Serializable {
         this.genero = genero;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -227,6 +235,5 @@ public class Personas implements Serializable {
     public String toString() {
         return "com.mycompany.learnmate.entities.Personas[ personaId=" + personaId + " ]";
     }
-    
-    
+
 }
