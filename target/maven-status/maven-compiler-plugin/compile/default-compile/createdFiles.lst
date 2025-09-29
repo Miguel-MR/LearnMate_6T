@@ -11,6 +11,7 @@ com\mycompany\learnmate\services\AcudientesFacade.class
 com\mycompany\learnmate\controller\ControllerUsuario.class
 com\mycompany\learnmate\services\PersonasFacade.class
 com\mycompany\learnmate\services\AsignaturasFacadeLocal.class
+com\mycompany\learnmate\controller\CorreoBean.class
 com\mycompany\learnmate\entities\Tareas.class
 com\mycompany\learnmate\services\ProfesoresFacade.class
 com\mycompany\learnmate\services\RolPermisosFacade.class
@@ -31,6 +32,7 @@ com\mycompany\learnmate\entities\Usuarios.class
 com\mycompany\learnmate\services\AbstractFacade.class
 com\mycompany\learnmate\controller\RolesConverter.class
 com\mycompany\learnmate\services\PermisosFacadeLocal.class
+com\mycompany\learnmate\services\EmailService$1.class
 com\mycompany\learnmate\services\BoletinesFacade.class
 com\mycompany\learnmate\services\CursosFacadeLocal.class
 com\mycompany\learnmate\services\EstadoUsuarioFacadeLocal.class
@@ -45,8 +47,10 @@ com\mycompany\learnmate\entities\EstadoUsuario.class
 com\mycompany\learnmate\entities\Asignaturas.class
 com\mycompany\learnmate\services\AsignacionAsignaturasFacadeLocal.class
 com\mycompany\learnmate\services\EstadoUsuarioFacade.class
+com\mycompany\learnmate\services\EmailService.class
 com\mycompany\learnmate\services\BoletinesFacadeLocal.class
 com\mycompany\learnmate\controller\ControllerPersona.class
+com\mycompany\learnmate\controller\CorreoController.class
 com\mycompany\learnmate\services\RolesFacade.class
 com\mycompany\learnmate\entities\Acudientes.class
 com\mycompany\learnmate\controller\EstadoUsuarioConverter.class

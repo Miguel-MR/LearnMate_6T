@@ -25,10 +25,9 @@ public class Login implements Serializable {
     private Usuarios user;
     private List<Permisos> listaPermisos;
 
-    RolesUsuario use = new RolesUsuario();
-
     @EJB
     private UsuariosFacadeLocal ufl;
+
     @EJB
     private PermisosFacadeLocal pfl;
 
@@ -44,12 +43,12 @@ public class Login implements Serializable {
         this.listaPermisos = listaPermisos;
     }
 
-    public String getUsuario() {
+    public String getNombreusuario() {
         return nombreusuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.nombreusuario = usuario;
+    public void setNombreusuario(String nombreusuario) {
+        this.nombreusuario = nombreusuario;
     }
 
     public String getContrasenna() {
@@ -61,31 +60,37 @@ public class Login implements Serializable {
     }
 
     public String iniciarSesion() {
-   
-        System.out.println("Usuario ingresado: " + nombreusuario);
-        System.out.println("Contraseña original: " + contrasenna);
-        System.out.println("Hash SHA-256 generado: ");
+        try {
+            String hash = hashSHA256(contrasenna);
+            user = ufl.iniciarSesion(nombreusuario, hash);
 
-        user = ufl.iniciarSesion(nombreusuario, contrasenna);
+            if (user != null) {
+                FacesContext contexto = FacesContext.getCurrentInstance();
+                HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
+                this.listaPermisos = pfl.permisosByUser(user);
+                sesion.setAttribute("usuario", user);
 
-        if (user != null && user.getNombreusuario() != null && user.getContrasenna() != null && user.getIdRol().getRolId() == 1) {
-            System.out.println("Inicio de sesión exitoso. Usuario encontrado: " + user.getNombreusuario());
+                // Redirigir según rol
+                for (RolesUsuario ru : user.getRolesUsuarioList()) {
+                    int rolId = ru.getRolId().getRolId();
+                    if (rolId == 1) return "views/inicio.xhtml?faces-redirect=true";
+                    if (rolId == 3) return "views/iniciousuario.xhtml?faces-redirect=true";
+                }
+
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario sin permisos asignados", null);
+                contexto.addMessage(null, fm);
+                return null;
+            } else {
+                FacesContext contexto = FacesContext.getCurrentInstance();
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña inválidos", null);
+                contexto.addMessage(null, fm);
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
             FacesContext contexto = FacesContext.getCurrentInstance();
-            HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
-            this.listaPermisos = pfl.permisosByUser(user);
-            sesion.setAttribute("usuario", user);
-            return "views/inicio.xhtml?faces-redirect=true";
-        } else if (user != null && user.getNombreusuario() != null && user.getContrasenna() != null && user.getIdRol().getRolId() == 3) {
-            System.out.println("Inicio de sesión exitoso. Usuario encontrado: " + user.getNombreusuario());
-            FacesContext contexto = FacesContext.getCurrentInstance();
-            HttpSession sesion = (HttpSession) contexto.getExternalContext().getSession(true);
-            this.listaPermisos = pfl.permisosByUser(user);
-            sesion.setAttribute("usuario", user);
-            return "views/iniciousuario.xhtml?faces-redirect=true";
-        } else {
-            System.out.println("Inicio de sesión fallido.");
-            FacesContext contexto = FacesContext.getCurrentInstance();
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña inválidos", "MSG_ERROR");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al iniciar sesión: " + e.getMessage(), null);
             contexto.addMessage(null, fm);
             return null;
         }
@@ -95,7 +100,6 @@ public class Login implements Serializable {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashedBytes = md.digest(input.getBytes());
-
             StringBuilder sb = new StringBuilder();
             for (byte b : hashedBytes) {
                 sb.append(String.format("%02x", b));
@@ -108,12 +112,10 @@ public class Login implements Serializable {
 
     public String cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "login?faces-redirect=true"; // Cambia "login" si tu página tiene otro nombre
+        return "login?faces-redirect=true";
     }
 
     public void invalidarSesion() {
-
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-
     }
 }

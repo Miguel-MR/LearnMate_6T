@@ -12,7 +12,7 @@
                     <ul class="nav nav-tabs nav-justified" role="tablist">
                         <li role="presentation" class="active"><a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Estadísticas</a></li>
                         <li role="presentation"><a href="#bitacora" aria-controls="bitacora" role="tab" data-toggle="tab">Bitácora</a></li>
-                        <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reportes y fichas</a></li>
+                        <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reportes y boletín</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- Estadísticas -->
@@ -20,7 +20,7 @@
                             <div class="container-fluid"  style="margin: 50px 0;">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-4 col-md-3">
-                                        <img src="assets/img/analytics.png" alt="chart" class="img-responsive center-box" style="max-width: 120px;"/>
+                                        <img src="#{request.contextPath}/resources/assets/icons/estadisticas.png" alt="chart" class="img-responsive center-box" style="max-width: 120px;"/>
                                     </div>
                                     <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
                                         Bienvenido al área de reporte y estadísticas, de la institucion aquí encontrarás a detalle y consolidada la información de todo el plantel educativo.
@@ -172,7 +172,7 @@
                                 </section>
                             </div>
                         </div>
-                        <!-- Reportes y fichas -->
+                        <!-- Reportes y boletin-->
                         <div role="tabpanel" class="tab-pane fade" id="reports">
                             
                             <!-- Fichas vacías -->
@@ -211,7 +211,7 @@
                                 <!-- Reportes pendientes -->
                                 <div class="row">
                                     <div class="page-header">
-                                        <h2 class="all-tittles">reportes <small> pendientes</small></h2>
+                                        <h2 class="all-tittles">Boletin</h2>
                                     </div><br/>
                                     <ui:repeat value="#{reporteBean.reportesPendientes}" var="pendiente">
                                         <div class="col-xs-12 col-sm-6 col-md-4">
@@ -223,6 +223,13 @@
                                             </div>
                                         </div>
                                     </ui:repeat>
+                                    
+                                    <button 
+                                        style="background-color: blue; color: white; padding: 10px 20px; border: none; border-radius: 5px;" 
+                                        onclick="window.location.href='boletin.xhtml';">
+                                        Generar
+                                    </button>
+
                                 </div>
                             </div>
                         </div>

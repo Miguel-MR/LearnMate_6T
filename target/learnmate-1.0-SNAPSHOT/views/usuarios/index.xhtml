@@ -1,114 +1,299 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../TemplateSitio.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
-        <ui:composition template="./../TemplateSitio.xhtml">
-            <ui:define name="content">
-                <f:view>
-                    <h:form>
-                        <h1><h:outputText value="Registro de Persona" /></h1>
+    <ui:define name="content">
+        <div id="content" class="left_content">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="all-tittles">
+                        Sistema Escolar <small>Administración Usuarios</small>
+                    </h1>
+                </div>
+            </div>
 
-                        <!-- Datos personales -->
-                        <h:panelGrid columns="2" columnClasses="label,value" style="margin-bottom: 2em">
+            <div class="container-fluid" style="margin: 50px 0;">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <img src="#{request.contextPath}/resources/assets/img/user03.png"
+                             alt="user"
+                             class="img-responsive center-box"
+                             style="max-width: 110px;"/>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
+                        En esta sección podrá registrar nuevos usuarios, diligencie la información en los siguientes campos:
+                    </div>
+                </div>
+            </div>
 
-                            <h:outputLabel for="primerNombre" value="Primer Nombre:" />
-                            <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}" required="true" />
+            <!-- formulario -->
+            <div class="container-fluid">
+                <div class="container-flat-form">
+                    <div class="title-flat-form title-flat-blue">
+                        Registrar un nuevo Usuario
+                    </div>
 
-                            <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
-                            <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}" />
+                    <h:form styleClass="form-padding">
+                        <div class="row">
 
-                            <h:outputLabel for="primerApellido" value="Primer Apellido:" />
-                            <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}" required="true" />
+                            <!-- Primer Nombre -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="primerNombre" value="Primer Nombre:" />
+                                    <h:inputText id="primerNombre" value="#{controllerPersona.con.primerNombre}"
+                                                 required="true" maxlength="50"
+                                                 styleClass="form-control"
+                                                 requiredMessage="El primer nombre es obligatorio.">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,50}" />
+                                    </h:inputText>
+                                    <h:message for="primerNombre" style="color:red;" />
+                                </div>
+                            </div>
 
-                            <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
-                            <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}" />
+                            <!-- Segundo Nombre -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
+                                    <h:inputText id="segundoNombre" value="#{controllerPersona.con.segundoNombre}"
+                                                 maxlength="50" styleClass="form-control">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,50}" />
+                                    </h:inputText>
+                                    <h:message for="segundoNombre" style="color:red;" />
+                                </div>
+                            </div>
 
-                            <h:outputLabel for="tipoDocumento" value="Tipo de Documento:" />
-                            <h:selectOneMenu id="tipoDocumento" value="#{controllerPersona.con.tipoDocumento}" required="true">
-                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                <f:selectItem itemLabel="Registro Civil" itemValue="RC" />
-                                <f:selectItem itemLabel="Tarjeta de Identidad" itemValue="TI" />
-                                <f:selectItem itemLabel="Cédula de Ciudadanía" itemValue="CC" />
-                                <f:selectItem itemLabel="Cédula de Extranjería" itemValue="CE" />
-                                <f:selectItem itemLabel="Permiso por Protección Temporal" itemValue="PPT" />
-                            </h:selectOneMenu>
+                            <!-- Primer Apellido -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="primerApellido" value="Primer Apellido:" />
+                                    <h:inputText id="primerApellido" value="#{controllerPersona.con.primerApellido}"
+                                                 required="true" maxlength="50"
+                                                 styleClass="form-control"
+                                                 requiredMessage="El primer apellido es obligatorio.">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,50}" />
+                                    </h:inputText>
+                                    <h:message for="primerApellido" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Segundo Apellido -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
+                                    <h:inputText id="segundoApellido" value="#{controllerPersona.con.segundoApellido}"
+                                                 maxlength="50" styleClass="form-control">
+                                        <f:validateRegex pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,50}" />
+                                    </h:inputText>
+                                    <h:message for="segundoApellido" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Tipo Documento -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="tipoDocumento" value="Tipo de Documento:" />
+                                    <h:selectOneMenu id="tipoDocumento" value="#{controllerPersona.con.tipoDocumento}"
+                                                     required="true" styleClass="form-control"
+                                                     requiredMessage="Seleccione un tipo de documento">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItem itemLabel="Registro Civil" itemValue="RC"/>
+                                        <f:selectItem itemLabel="Tarjeta de Identidad" itemValue="TI"/>
+                                        <f:selectItem itemLabel="Cédula de Ciudadanía" itemValue="CC"/>
+                                        <f:selectItem itemLabel="Cédula de Extranjería" itemValue="CE"/>
+                                        <f:selectItem itemLabel="Permiso por Protección Temporal" itemValue="PPT"/>
+                                    </h:selectOneMenu>
+                                    <h:message for="tipoDocumento" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Número Documento -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="identificacion" value="Número de Documento:" />
+                                    <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}"
+                                                 required="true" maxlength="20"
+                                                 styleClass="form-control"
+                                                 requiredMessage="El número de documento es obligatorio.">
+                                        <f:validateRegex pattern="[0-9]{5,20}" />
+                                    </h:inputText>
+                                    <h:message for="identificacion" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Género -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="genero" value="Género:" />
+                                    <h:selectOneMenu id="genero" value="#{controllerPersona.con.genero}"
+                                                     required="true" styleClass="form-control"
+                                                     requiredMessage="Seleccione un género">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                                        <f:selectItem itemLabel="Femenino" itemValue="Femenino"/>
+                                    </h:selectOneMenu>
+                                    <h:message for="genero" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Fecha Nacimiento -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
+                                    <h:inputText id="fechaNacimiento" value="#{controllerPersona.con.fechaNacimiento}"
+                                                 required="true" styleClass="form-control"
+                                                 requiredMessage="La fecha de nacimiento es obligatoria.">
+                                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                                        <f:passThroughAttribute name="type" value="date" />
+                                    </h:inputText>
+                                    <h:message for="fechaNacimiento" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Dirección -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="direccion" value="Dirección:" />
+                                    <h:inputText id="direccion" value="#{controllerPersona.con.direccion}"
+                                                 required="true" maxlength="100"
+                                                 styleClass="form-control"
+                                                 requiredMessage="La dirección es obligatoria.">
+                                        <f:validateRegex pattern=".{1,100}" />
+                                    </h:inputText>
+                                    <h:message for="direccion" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Teléfono -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="telefono" value="Teléfono:" />
+                                    <h:inputText id="telefono" value="#{controllerPersona.con.telefono}"
+                                                 required="true" maxlength="15"
+                                                 styleClass="form-control"
+                                                 requiredMessage="El teléfono es obligatorio.">
+                                        <f:validateRegex pattern="[0-9]{7,15}" />
+                                    </h:inputText>
+                                    <h:message for="telefono" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Correo -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="correo" value="Correo Electrónico:" />
+                                    <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}"
+                                                 required="true" maxlength="100"
+                                                 styleClass="form-control"
+                                                 requiredMessage="El correo es obligatorio.">
+                                        <f:validateRegex pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                                    </h:inputText>
+                                    <h:message for="correo" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Usuario -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="nombreusuario" value="Nombre de Usuario:" />
+                                    <h:inputText id="nombreusuario" value="#{controllerPersona.nuevoUsuario.nombreusuario}"
+                                                 required="true" maxlength="20"
+                                                 styleClass="form-control"
+                                                 requiredMessage="El nombre de usuario es obligatorio.">
+                                        <f:validateRegex pattern="[a-zA-Z0-9]{4,20}" />
+                                    </h:inputText>
+                                    <h:message for="nombreusuario" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Contraseña -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="contrasenna" value="Contraseña:" />
+                                    <h:inputSecret id="contrasenna" value="#{controllerPersona.nuevoUsuario.contrasenna}"
+                                                   required="true" maxlength="200"
+                                                   styleClass="form-control"
+                                                   requiredMessage="La contraseña es obligatoria.">
+                                        <f:validateRegex pattern=".{6,200}" />
+                                    </h:inputSecret>
+                                    <h:message for="contrasenna" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Confirmar Contraseña -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="confirmarContrasenna" value="Confirmar Contraseña:" />
+                                    <h:inputSecret id="confirmarContrasenna" value="#{controllerPersona.confirmarContrasenna}"
+                                                   required="true" maxlength="200"
+                                                   styleClass="form-control"
+                                                   requiredMessage="Debe confirmar la contraseña.">
+                                        <f:validateRegex pattern=".{6,200}" />
+                                    </h:inputSecret>
+                                    <h:message for="confirmarContrasenna" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Rol -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="rolId" value="Rol del Usuario:" />
+                                    <h:selectOneMenu id="rolId" value="#{controllerPersona.rolSeleccionado}"
+                                                     converter="rolesConverter" required="true"
+                                                     styleClass="form-control"
+                                                     requiredMessage="Seleccione un rol">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{controllerPersona.listaRoles}" var="rol"
+                                                       itemLabel="#{rol.nombreRol}" itemValue="#{rol}" />
+                                    </h:selectOneMenu>
+                                    <h:message for="rolId" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Estado -->
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="form-group">
+                                    <h:outputLabel for="estadoId" value="Estado del Usuario:" />
+                                    <h:selectOneMenu id="estadoId" value="#{controllerPersona.nuevoUsuario.estadoId}"
+                                                     converter="estadoUsuarioConverter" required="true"
+                                                     styleClass="form-control"
+                                                     requiredMessage="Seleccione un estado">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{controllerPersona.listaEstados}" var="estado"
+                                                       itemLabel="#{estado.nombreEstado}" itemValue="#{estado}" />
+                                    </h:selectOneMenu>
+                                    <h:message for="estadoId" style="color:red;" />
+                                </div>
+                            </div>
+
+                            <!-- Botón -->
+                            <div class="col-xs-12">
+                                <p class="text-center">
+                                    <!-- Registrar ejecuta validaciones -->
+                                    <h:commandButton value="Guardar Cambios"
+                                                     action="#{controllerPersona.actualizarPersona}"
+                                                     styleClass="btn btn-primary"
+                                                     onclick="alert('Usuario creado correctamente');" />
 
 
-                            <h:outputLabel for="identificacion" value="Número de Documento:" />
-                            <h:inputText id="identificacion" value="#{controllerPersona.con.identificacion}" required="true" />
+                                    <!-- Cancelar no valida -->
+                                    <h:button value="Cancelar"
+                                              outcome="/views/usuarios/list"
+                                              styleClass="btn btn-danger"
+                                              onclick="return confirm('¿Seguro que deseas cancelar? Los cambios no se guardarán.');"/>
+                                </p>
 
-                            <h:outputLabel for="genero" value="Género:" />
-                            <h:selectOneMenu id="genero" value="#{controllerPersona.con.genero}" required="true">
-                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
-                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
-                            </h:selectOneMenu>
+                                <!-- Muestra todos los mensajes -->
+                                <h:messages layout="table" style="color:red;" />
+                            </div>
 
-                            <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
-                            <h:inputText id="fechaNacimiento" value="#{controllerPersona.con.fechaNacimiento}">
-                                <f:convertDateTime pattern="yyyy-MM-dd" />
-                                <f:passThroughAttribute name="type" value="date" />
-                            </h:inputText>
-
-                            <h:outputLabel for="direccion" value="Dirección:" />
-                            <h:inputText id="direccion" value="#{controllerPersona.con.direccion}" />
-
-                            <h:outputLabel for="telefono" value="Teléfono:" />
-                            <h:inputText id="telefono" value="#{controllerPersona.con.telefono}" />
-
-                            <h:outputLabel for="correo" value="Correo Electrónico:" />
-                            <h:inputText id="correo" value="#{controllerPersona.con.correoElectronico}" />
-                        </h:panelGrid>
-
-                        <!-- Datos de usuario -->
-                        <h:panelGrid columns="2" columnClasses="label,value" style="margin-bottom: 2em">
-
-                            <h:outputLabel for="nombreusuario" value="Nombre de Usuario:" />
-                            <h:inputText id="nombreusuario" value="#{controllerPersona.nuevoUsuario.nombreusuario}" required="true" />
-                            <h:outputLabel />
-                            <h:message for="nombreusuario" style="color:red" />
-
-                            <h:outputLabel for="contrasenna" value="Contraseña:" />
-                            <h:inputSecret id="contrasenna" value="#{controllerPersona.nuevoUsuario.contrasenna}" required="true" />
-                            <h:outputLabel />
-                            <h:message for="contrasenna" style="color:red" />
-
-                            <h:outputLabel for="confirmarContrasenna" value="Confirmar Contraseña:" />
-                            <h:inputSecret id="confirmarContrasenna" value="#{controllerPersona.confirmarContrasenna}" required="true" />
-                            <h:outputLabel />
-                            <h:message for="confirmarContrasenna" style="color:red" />
-
-                            <h:outputLabel for="rolId" value="Rol del Usuario:" />
-                            <h:selectOneMenu id="rolId" value="#{controllerPersona.rolSeleccionado}" converter="rolesConverter" required="true">
-                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{controllerPersona.listaRoles}" var="rol"
-                                               itemLabel="#{rol.nombreRol}" itemValue="#{rol}" />
-                            </h:selectOneMenu>
-                            <h:outputLabel />
-                            <h:message for="rolId" style="color:red" />
-
-                            <h:outputLabel for="estadoId" value="Estado del Usuario:" />
-                            <h:selectOneMenu id="estadoId" value="#{controllerPersona.nuevoUsuario.estadoId}" converter="estadoUsuarioConverter" required="true">
-                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{controllerPersona.listaEstados}" var="estado"
-                                               itemLabel="#{estado.nombreEstado}" itemValue="#{estado}" />
-                            </h:selectOneMenu>
-                            <h:outputLabel />
-                            <h:message for="estadoId" style="color:red" />
-                        </h:panelGrid>
-
-                        <!-- Acción -->
-                        <h:commandButton value="Registrar" action="#{controllerPersona.crearPersona()}" style="margin-top:1em;" />
-                        <h:messages globalOnly="true" layout="table" />
-
+                        </div>
                     </h:form>
-                </f:view>
-            </ui:define>
-        </ui:composition>
-    </body>
-</html>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+</ui:composition>

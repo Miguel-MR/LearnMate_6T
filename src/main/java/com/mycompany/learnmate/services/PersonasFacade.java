@@ -8,6 +8,8 @@ import com.mycompany.learnmate.entities.Personas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  *
@@ -27,5 +29,11 @@ public class PersonasFacade extends AbstractFacade<Personas> implements Personas
     public PersonasFacade() {
         super(Personas.class);
     }
-    
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void create(Personas persona) {
+        super.create(persona); // llama al método de AbstractFacade
+    }
+
 }

@@ -1,55 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.learnmate.entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
 
 /**
- *
- * @author castr
+ * Entidad que representa la relación entre Roles y Usuarios.
  */
 @Entity
 @Table(name = "roles_usuario")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "RolesUsuario.findAll", query = "SELECT r FROM RolesUsuario r"),
-    @NamedQuery(name = "RolesUsuario.findByUsuarioRolId", query = "SELECT r FROM RolesUsuario r WHERE r.usuarioRolId = :usuarioRolId")})
 public class RolesUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "usuario_rol_id")
     private Integer usuarioRolId;
-    @JoinColumn(name = "rol_id", referencedColumnName = "rol_id")
-    @ManyToOne(optional = false)
-    private Roles rolId;
-    @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id")
-    @ManyToOne(optional = false)
-    private Usuarios usuarioId;
 
-    public RolesUsuario() {
-    }
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "rol_id", referencedColumnName = "rol_id")
+    private Roles rolId;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id")
+    private Usuarios usuarioId; // CORREGIDO: este es el atributo que debe usar mappedBy
+
+    // Constructores
+    public RolesUsuario() {}
 
     public RolesUsuario(Integer usuarioRolId) {
         this.usuarioRolId = usuarioRolId;
     }
 
+    // Getters y Setters
     public Integer getUsuarioRolId() {
         return usuarioRolId;
     }
@@ -76,27 +59,18 @@ public class RolesUsuario implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (usuarioRolId != null ? usuarioRolId.hashCode() : 0);
-        return hash;
+        return usuarioRolId != null ? usuarioRolId.hashCode() : 0;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RolesUsuario)) {
-            return false;
-        }
-        RolesUsuario other = (RolesUsuario) object;
-        if ((this.usuarioRolId == null && other.usuarioRolId != null) || (this.usuarioRolId != null && !this.usuarioRolId.equals(other.usuarioRolId))) {
-            return false;
-        }
-        return true;
+    public boolean equals(Object obj) {
+        if (!(obj instanceof RolesUsuario)) return false;
+        RolesUsuario other = (RolesUsuario) obj;
+        return usuarioRolId != null && usuarioRolId.equals(other.usuarioRolId);
     }
 
     @Override
     public String toString() {
-        return "com.mycompany.learnmate.entities.RolesUsuario[ usuarioRolId=" + usuarioRolId + " ]";
+        return "RolesUsuario[ usuarioRolId=" + usuarioRolId + " ]";
     }
-    
 }

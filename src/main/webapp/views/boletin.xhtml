@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      lang="es">
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boletín Escolar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&amp;display=swap" rel="stylesheet" />
+    <link rel="icon" href="imgenes/Logo.png" />
+
+    <style>
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            margin: 30px;
+            background-color: #e1eceeb9;
+        }
+        .report-card {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .header img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+        }
+        .student-info {
+            margin-bottom: 20px;
+        }
+        .student-info p {
+            margin: 5px 0;
+        }
+        .grades {
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        .grades table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .grades th, .grades td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .grades th {
+            background-color: #f2f2f2;
+        }
+        .performance-chart {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .performance-chart img {
+            max-width: 100%;
+            height: auto;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer p {
+            font-style: italic;
+        }
+        @media (max-width: 600px) {
+            .report-card {
+                padding: 20px;
+            }
+            .header img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="report-card">
+        <div class="header">
+            <img src="http://localhost:8080/LearnMate_6T/resources/assets/icons/logo.png" alt="chart" class="img-responsive center-box" style="max-width: 120px;" />
+            <h1>Boletín Escolar</h1>
+            <p>Año Escolar: 2024</p>
+        </div>
+
+        <div class="student-info">
+            <br />
+            <h2>Información del Estudiante</h2>
+            <p><strong>Nombre: </strong> <h:outputText value="#{login.nombreusuario}" /></p>
+            <p><strong>Documento:</strong>
+                <h:outputText value="#{boletinBean.persona.tipoDocumento} #{boletinBean.persona.identificacion}" />
+            </p>
+
+            <p><strong>Grado:</strong> 10°</p>
+            <p><strong>Edad:</strong> 15 años</p>
+            <p><strong>Fecha de Nacimiento: </strong> <h:outputText value="#{login.nombreusuario}" /></p>
+            <p><strong>Puesto:</strong> 3°</p>
+        </div>
+
+        <div class="grades">
+            <h2>Calificaciones</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Asignatura</th>
+                        <th>Calificación</th>
+                        <th>Comentarios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Matemáticas</td>
+                        <td>90</td>
+                        <td>Muy buen desempeño, sigue así.</td>
+                    </tr>
+                    <tr>
+                        <td>Historia</td>
+                        <td>85</td>
+                        <td>Buen conocimiento, pero puede mejorar.</td>
+                    </tr>
+                    <tr>
+                        <td>Ciencias</td>
+                        <td>88</td>
+                        <td>Buena comprensión de los conceptos.</td>
+                    </tr>
+                    <tr>
+                        <td>Literatura</td>
+                        <td>92</td>
+                        <td>Excelente análisis y crítica.</td>
+                    </tr>
+                    <tr>
+                        <td>Educación Física</td>
+                        <td>95</td>
+                        <td>Gran desempeño y esfuerzo.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="performance-chart">
+            <h2>Desempeño General</h2>
+            <img src="http://localhost:8080/LearnMate_6T/resources/assets/icons/logo.png" alt="chart" class="img-responsive center-box" style="max-width: 120px;" />
+        </div>
+
+        <div class="footer">
+            <p><strong>Comentarios Generales:</strong> Juan ha tenido un excelente rendimiento académico este año. Su esfuerzo y dedicación son notables. ¡Sigue así!</p>
+        </div>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./TemplateSitio.xhtml">
+            <ui:define name="content">
+                <div id="content" class="left_content">
+                    <div class="container">
+                        <div class="page-header">
+                            <h1 class="all-tittles">
+                                Sistema Escolar <small>Envío de Correos Masivos</small>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="container-fluid" style="margin: 30px 0;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-3">
+                                <img src="#{request.contextPath}/resources/assets/icons/gmail.png"
+                                     alt="correo"
+                                     class="img-responsive center-box"
+                                     style="max-width: 120px;"/>
+                            </div>
+                            <div class="col-xs-12 col-sm-8 col-md-8 text-justify lead">
+                                Desde aquí podrá enviar un correo masivo a todos los usuarios registrados en el sistema.
+                                Por favor, diligencie el <b>asunto</b> y el <b>contenido del mensaje</b>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario -->
+                    <div class="container-fluid">
+                        <div class="container-flat-form">
+                            <div class="title-flat-form title-flat-blue">
+                                Enviar Correo Masivo
+                            </div>
+
+                            <h:form styleClass="form-padding">
+                                <div class="row">
+
+                                    <!-- Asunto -->
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <h:outputLabel for="asunto" value="Asunto:" />
+                                            <h:inputText id="asunto" value="#{correoBean.asunto}"
+                                                         required="true" maxlength="100"
+                                                         styleClass="form-control"
+                                                         requiredMessage="El asunto es obligatorio." />
+                                            <h:message for="asunto" style="color:red;" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Mensaje -->
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <h:outputLabel for="mensaje" value="Mensaje:" />
+                                            <h:inputTextarea id="mensaje" value="#{correoBean.mensaje}"
+                                                             required="true"
+                                                             styleClass="form-control"
+                                                             requiredMessage="El mensaje es obligatorio." />
+                                            <h:message for="mensaje" style="color:red;" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Botones -->
+                                    <div class="col-xs-12">
+                                        <p class="text-center">
+                                            <h:commandButton value="Enviar Correos"
+                                                             action="#{correoBean.enviarCorreos}"
+                                                             styleClass="btn btn-primary"
+                                                             onclick="return confirm('¿Desea enviar el correo masivo?');" />
+
+                                        </p>
+                                        <h:messages layout="table" style="color:red;" />
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

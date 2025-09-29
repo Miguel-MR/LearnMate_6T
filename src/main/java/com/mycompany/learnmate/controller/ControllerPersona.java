@@ -58,13 +58,20 @@ public class ControllerPersona implements Serializable {
                 con = cfl.find(id);
 
                 if (con != null) {
-                    System.out.println("🟢 Persona cargada: " + con.getPrimerNombre());
-                } else {
-                    System.out.println("🔴 No se encontró persona con ID: " + id);
+                    // 🔹 Cargar usuario asociado
+                    List<Usuarios> usuariosAsociados = usuariosFacade.findByPersonaId(con);
+                    if (usuariosAsociados != null && !usuariosAsociados.isEmpty()) {
+                        nuevoUsuario = usuariosAsociados.get(0);
+
+                        // 🔹 Cargar rol asociado
+                        List<RolesUsuario> rolesAsociados = rolesUsuarioFacade.findByUsuarioId(nuevoUsuario);
+                        if (rolesAsociados != null && !rolesAsociados.isEmpty()) {
+                            rolSeleccionado = rolesAsociados.get(0).getRolId();
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
-            System.out.println("❌ Error en init(): " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -73,15 +80,20 @@ public class ControllerPersona implements Serializable {
         try {
             if (!nuevoUsuario.getContrasenna().equals(confirmarContrasenna)) {
                 FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", null));
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", null));
                 return;
             }
 
             String hashedPassword = hashPassword(nuevoUsuario.getContrasenna());
             nuevoUsuario.setContrasenna(hashedPassword);
 
+            // Crear la persona primero
             cfl.create(con);
+
+            // Cambiado a setEstadoUsuario
             nuevoUsuario.setEstadoId(estadoFacade.find(1));
+            nuevoUsuario.setPersona(con);
+
             usuariosFacade.create(nuevoUsuario);
 
             RolesUsuario ru = new RolesUsuario();
@@ -90,7 +102,7 @@ public class ControllerPersona implements Serializable {
             rolesUsuarioFacade.create(ru);
 
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro exitoso", null));
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro exitoso", null));
 
             con = new Personas();
             nuevoUsuario = new Usuarios();
@@ -100,20 +112,47 @@ public class ControllerPersona implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al registrar: " + e.getMessage(), null));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al registrar: " + e.getMessage(), null));
         }
     }
 
     public String actualizarPersona() {
         try {
+            // Actualizar persona
             cfl.edit(con);
+
+            // Actualizar usuario
+            if (nuevoUsuario != null) {
+                // Solo cifrar si la contraseña fue modificada
+                if (nuevoUsuario.getContrasenna() != null && !nuevoUsuario.getContrasenna().isEmpty()) {
+                    nuevoUsuario.setContrasenna(hashPassword(nuevoUsuario.getContrasenna()));
+                }
+                usuariosFacade.edit(nuevoUsuario);
+            }
+
+            // Actualizar rol
+            if (rolSeleccionado != null) {
+                List<RolesUsuario> rolesAsociados = rolesUsuarioFacade.findByUsuarioId(nuevoUsuario);
+                if (rolesAsociados != null && !rolesAsociados.isEmpty()) {
+                    RolesUsuario ru = rolesAsociados.get(0);
+                    ru.setRolId(rolSeleccionado);
+                    rolesUsuarioFacade.edit(ru);
+                } else {
+                    RolesUsuario ruNuevo = new RolesUsuario();
+                    ruNuevo.setUsuarioId(nuevoUsuario);
+                    ruNuevo.setRolId(rolSeleccionado);
+                    rolesUsuarioFacade.create(ruNuevo);
+                }
+            }
+
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Persona actualizada correctamente", null));
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Persona y usuario actualizados correctamente", null));
+
             return "/views/personas/index.xhtml?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar: " + e.getMessage(), null));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar: " + e.getMessage(), null));
             return null;
         }
     }
@@ -133,11 +172,11 @@ public class ControllerPersona implements Serializable {
             cfl.remove(persona);
 
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Persona y usuario eliminados", null));
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Persona y usuario eliminados", null));
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar: " + e.getMessage(), null));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar: " + e.getMessage(), null));
         }
     }
 
@@ -166,11 +205,10 @@ public class ControllerPersona implements Serializable {
 
     public String prepararEdicion(Personas persona) {
         this.con = persona;
-        return "/views/personas/editar.xhtml";
+        return "/views/usuarios/index.xhtml";
     }
 
     // Getters y Setters
-
     public Personas getCon() {
         return con;
     }
